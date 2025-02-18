@@ -1,0 +1,935 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>深入理解计算机系统 | Boranget.博客</title><meta name="author" content="Boranget"><meta name="copyright" content="Boranget"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="资料CS:APP3e, Bryant and O’Hallaron (cmu.edu) 15-213&#x2F;15-513 Introduction to Computer Systems (cmu.edu) Kernighan The C Programming Language Bits，Bytes，Integer Byte &#x3D; 8bits 二进制每四位可以转为一个十六进制 地址是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统">
+<meta property="og:url" content="https://boranget.github.io/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/index.html">
+<meta property="og:site_name" content="Boranget.博客">
+<meta property="og:description" content="资料CS:APP3e, Bryant and O’Hallaron (cmu.edu) 15-213&#x2F;15-513 Introduction to Computer Systems (cmu.edu) Kernighan The C Programming Language Bits，Bytes，Integer Byte &#x3D; 8bits 二进制每四位可以转为一个十六进制 地址是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boranget.github.io/assets/img/tx.png">
+<meta property="article:published_time" content="2023-06-15T08:50:30.000Z">
+<meta property="article:modified_time" content="2024-01-04T08:40:19.000Z">
+<meta property="article:author" content="Boranget">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boranget.github.io/assets/img/tx.png"><link rel="shortcut icon" href="/assets/img/tx.png"><link rel="canonical" href="https://boranget.github.io/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深入理解计算机系统',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-04 16:40:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Boranget.博客"><img class="site-icon" src="/assets/img/tx.png"/><span class="site-name">Boranget.博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">深入理解计算机系统</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-15T08:50:30.000Z" title="发表于 2023-06-15 16:50:30">2023-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-04T08:40:19.000Z" title="更新于 2024-01-04 16:40:19">2024-01-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notes/">notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="深入理解计算机系统"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h1><p><a target="_blank" rel="noopener" href="https://csapp.cs.cmu.edu/">CS:APP3e, Bryant and O’Hallaron (cmu.edu)</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/~213/">15-213&#x2F;15-513 Introduction to Computer Systems (cmu.edu)</a></p>
+<p>Kernighan <em>The C Programming Language</em></p>
+<h1 id="Bits，Bytes，Integer"><a href="#Bits，Bytes，Integer" class="headerlink" title="Bits，Bytes，Integer"></a>Bits，Bytes，Integer</h1><ul>
+<li>Byte &#x3D; 8bits</li>
+<li>二进制每四位可以转为一个十六进制</li>
+<li>地址是由机器字长决定的，比如64位的机器表示地址是64位长&#x3D;8字节</li>
+<li>基于布尔运算来进行位运算</li>
+</ul>
+<h2 id="布尔运算"><a href="#布尔运算" class="headerlink" title="布尔运算"></a>布尔运算</h2><ul>
+<li><p>AND &amp; 交</p>
+<p>A&amp;B &#x3D; 1 when A和B都为1</p>
+</li>
+<li><p>Or | 并</p>
+<p>A|B&#x3D;1 when A和B至少有一个为1</p>
+</li>
+<li><p>Not ~ 补</p>
+<p>~A&#x3D;1 when A &#x3D; 0</p>
+</li>
+<li><p>Exclusive-Or(Xor) | 对称差</p>
+<p>A^B&#x3D;1 when A和B值不同</p>
+</li>
+</ul>
+<p>非位运算：&amp;&amp;，||，！</p>
+<ul>
+<li>0为假，非0为真，且有短路运算</li>
+</ul>
+<h2 id="位移操作"><a href="#位移操作" class="headerlink" title="位移操作"></a>位移操作</h2><ul>
+<li><p>左移 x &lt;&lt; y</p>
+<ul>
+<li>高位丢失，低位补0</li>
+</ul>
+</li>
+<li><p>右移 x &gt;&gt; y</p>
+<ul>
+<li>高位补0，低位丢失</li>
+</ul>
+<p>  10100010 &gt;&gt; 2 &#x3D; 00101000</p>
+<ul>
+<li><p>高位补符号位，低位丢失</p>
+<p>10100010 &gt;&gt; 2 &#x3D; 11101000</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二进制转整型"><a href="#二进制转整型" class="headerlink" title="二进制转整型"></a>二进制转整型</h2><ul>
+<li><p>无符号 B2U</p>
+</li>
+<li><p>有符号 B2T</p>
+<p>two’s complement 二进制补码</p>
+<p>最高位为1是负值</p>
+<p>补码的速记方式</p>
+<table>
+<thead>
+<tr>
+<th>4</th>
+<th>3</th>
+<th>2</th>
+<th>1</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-16</td>
+<td>8</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>10000 &#x3D; -16，10001 &#x3D; -15  </p>
+<p>Tmin &#x3D; -Tmax-1 [1000 &#x3D; 1001-1]</p>
+<p>Tmax &#x3D; Tmin - 1 [0111+ 1 &#x3D; 1000]</p>
+<p>-Tmin &#x3D; Tmin</p>
+</li>
+</ul>
+<p>理解补码：时钟，倒着走11下和正着走1下是一样的。也就是说，减去一个数A就等于加-A，同时也等于加一个数B：加到溢出后继续加，直到加到等于加-A为止，而增加的数B即为-A的补码。</p>
+<p>在C语言中，有符号数在与无符号数做计算与比较的时候会转换为无符号数</p>
+<p>一种现象</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此时若i为无符号数，循环会永远持续下去</span></span><br><span class="line"><span class="keyword">for</span>(i = n<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i --)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//sizeof会返回一个无符号数，而与无符号数做运算的整数会转为无符号</span></span><br><span class="line"><span class="keyword">for</span>(i = n<span class="number">-1</span>; i- <span class="keyword">sizeof</span>(<span class="type">int</span>) &gt;=<span class="number">0</span> ; i --)&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="补码的扩充"><a href="#补码的扩充" class="headerlink" title="补码的扩充"></a>补码的扩充</h2><p>10(-2) -&gt; 110(-2) -&gt; 1110(-2)</p>
+<p>01(1) -&gt; 001(1) -&gt; 0001(1)</p>
+<p>补码的扩充只需往左添加符号位的值 </p>
+<h2 id="截取"><a href="#截取" class="headerlink" title="截取"></a>截取</h2><p>无符号截取后几位就等于取2的几次模，比如截取后三位就等于取8的模</p>
+<h2 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h2><h3 id="Unsigned-Addition"><a href="#Unsigned-Addition" class="headerlink" title="Unsigned Addition"></a>Unsigned Addition</h3><p>相加，进位，超过字数w则舍弃进位，进行溢出  </p>
+<h3 id="Two‘s-Complement-Addition"><a href="#Two‘s-Complement-Addition" class="headerlink" title="Two‘s Complement Addition"></a>Two‘s Complement Addition</h3><p>与无符号类似 </p>
+<p>5+(-3) &#x3D; 0101 + 1101 &#x3D; 10010 &#x3D;舍弃进位&#x3D; 0010 &#x3D; 2 &#x3D; 5 - 3，这也是减法的实现原理</p>
+<p>同样会溢出： (-3) + (-6) &#x3D; 1101 + 1010 &#x3D; 7 </p>
+<p>w为位数</p>
+<h3 id="Unsigned-Multiplication"><a href="#Unsigned-Multiplication" class="headerlink" title="Unsigned Multiplication"></a>Unsigned Multiplication</h3><p>w+w，需要w+1的字长来保存完整结果</p>
+<p>w*w，需要w+1+1+…..+1 &#x3D; w+w个字长</p>
+<p>但通常会截断为w位</p>
+<h3 id="Signed-Multiplication"><a href="#Signed-Multiplication" class="headerlink" title="Signed Multiplication"></a>Signed Multiplication</h3><p>直接当作无符号乘，最后截断，该为符号位的就为符号位，当然也会有溢出</p>
+<h3 id="移位运算-x3D-x2F-2"><a href="#移位运算-x3D-x2F-2" class="headerlink" title="移位运算 &#x3D; *&#x2F;2"></a>移位运算 &#x3D; *&#x2F;2</h3><p>讨论补码的情况</p>
+<p>负数若右移且要保留符号位，需要补1：<strong>算数移位</strong></p>
+<p>1000 -&gt; 1100 -&gt; 1110 : -8 -&gt; -4 -&gt; -2</p>
+<p>但是</p>
+<p>1010 -&gt; 1101 -&gt; 1110 : -6 -&gt; -3 -&gt; -2</p>
+<p>所以需要加一个偏移量</p>
+<p>1010 -&gt; 1101 + 1 （1110）-&gt; 1111 : -6 -&gt; -3 -&gt; -1</p>
+<h3 id="取负"><a href="#取负" class="headerlink" title="取负"></a>取负</h3><p>包括符号位全部取反再加1</p>
+<p>-Tmin &#x3D; Tmin </p>
+<h3 id="溢出"><a href="#溢出" class="headerlink" title="溢出"></a>溢出</h3><p>有符号的情况下，若两个数符号相同，但计算结果的符号发生变化，则产生溢出，若两个计算数的符号不同，则不会发生溢出</p>
+<h1 id="字节存储"><a href="#字节存储" class="headerlink" title="字节存储"></a>字节存储</h1><p>64位机器最大内存地址位47位：128MM</p>
+<h2 id="字长"><a href="#字长" class="headerlink" title="字长"></a>字长</h2><p>64位字长机器意味着它通常处理64位的值和运算，且其地址的值为64位</p>
+<p>编译器在编译时可以决定使用32位还是64位编译，故一个程序的字长由机器和编译器共同决定</p>
+<h2 id="字节排序"><a href="#字节排序" class="headerlink" title="字节排序"></a>字节排序</h2><ul>
+<li><p>小端序 Little Endian</p>
+<p>第一个字节是最低有效字节</p>
+</li>
+<li><p>大端序 Big Endian</p>
+<p>最后一个字节是最低有效字节</p>
+<p>使用互联网发送32位字的数据包时，是使用大端序</p>
+</li>
+</ul>
+<p>存入0x1234567</p>
+<table>
+<thead>
+<tr>
+<th>排序方法|内存地址</th>
+<th>0x100</th>
+<th>0x101</th>
+<th>0x102</th>
+<th>0x103</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大端序</td>
+<td>01</td>
+<td>23</td>
+<td>45</td>
+<td>67</td>
+</tr>
+<tr>
+<td>小端序</td>
+<td>67</td>
+<td>45</td>
+<td>23</td>
+<td>01</td>
+</tr>
+</tbody></table>
+<h1 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h1><p>101.11 </p>
+<p>小数点后依次 10^-1, 10^-2, 10^-3…..</p>
+<p>右移相当于除二：10.111 </p>
+<h2 id="IEEE-浮点数"><a href="#IEEE-浮点数" class="headerlink" title="IEEE 浮点数"></a>IEEE 浮点数</h2><p>类似于科学计数法 </p>
+<p>(-1)^S * M * 2^E</p>
+<p>S为符号位，尾数M 介于1.0~2.0之间</p>
+<table>
+<thead>
+<tr>
+<th>s：符号位</th>
+<th>exp：encode E</th>
+<th>frac： encode M</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1位</td>
+<td>32：8位<br>64：11位<br>80：15位（intel only）</td>
+<td>32：23位<br>64：52位<br>80：63 or 64 位</td>
+</tr>
+</tbody></table>
+<p>由于指数除了整数也会存在负数，故在存储时会经过编码，存储的值为EXP，计算公式为Exp&#x3D;指数E+Bias</p>
+<p>其中 exp 不能全为0或全为1，Bias 值为 (2^(k-1))-1:</p>
+<ul>
+<li><p>单精度 Bias 值为 127</p>
+<p>则 Exp：1<del>254；E：-126</del>127</p>
+</li>
+<li><p>双精度 Bias 值为 1023</p>
+<p>则 Exp：1<del>2046；E: -1022</del>1023</p>
+</li>
+</ul>
+<p>至于为何不用补码来表示正负，是因为方便比较大小</p>
+<p>M 位的值都为1.XXXX，但1不进行存储，如此省去了一位。  </p>
+<p>但如何表示0呢？下面有说。</p>
+<p><strong>例如</strong></p>
+<p>float F &#x3D; 15213.0;</p>
+<p>15213 &#x3D; 11101101101101</p>
+<p>​			&#x3D; 1.1101101101101*2^13</p>
+<p>所以</p>
+<p>​	M &#x3D; 1101101101101</p>
+<p>​    frac &#x3D; M补零 &#x3D; 11011011011010000000000</p>
+<p>​	E &#x3D; 13</p>
+<p>​    Exp &#x3D; E + Bias &#x3D; 13 + 127 &#x3D; 140 &#x3D; 10001100</p>
+<p>结果</p>
+<table>
+<thead>
+<tr>
+<th>s</th>
+<th>exp</th>
+<th>frac</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>10001100</td>
+<td>11011011011010000000000</td>
+</tr>
+</tbody></table>
+<h2 id="Denormalized-Values"><a href="#Denormalized-Values" class="headerlink" title="Denormalized Values"></a>Denormalized Values</h2><p>当exp全为0 称为Denormalized Values</p>
+<p>​	此时E &#x3D; 1 - Bias  </p>
+<p>​	且frac不是1.XXXXX，而是0.XXXXXX</p>
+<p>​	当exp全为0且frac全为0，则整个浮点数表示0，包括正0和负0</p>
+<p>若当exp全为1</p>
+<p>​	当frac全为0，表示无穷大数</p>
+<p>​	当frac不为0，表示NaN</p>
+<p><img src="/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/image-20230622164958628.png" alt="image-20230622164958628"></p>
+<h2 id="一些特殊属性"><a href="#一些特殊属性" class="headerlink" title="一些特殊属性"></a>一些特殊属性</h2><ul>
+<li><p>FloatPoint 0 与 整数0相同，都是所有位为0</p>
+</li>
+<li><p>基本上可以使用无符号整型的比较方式 </p>
+<ul>
+<li>必须先比较符号位</li>
+<li>必须考虑-0 &#x3D; 0</li>
+<li>NaN 是有问题的</li>
+</ul>
+</li>
+</ul>
+<h2 id="运算"><a href="#运算" class="headerlink" title="运算"></a>运算</h2><p> 进行精确运算，然后进行round</p>
+<h3 id="rounding"><a href="#rounding" class="headerlink" title="rounding"></a>rounding</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>1.4</th>
+<th>1.6</th>
+<th>1.5</th>
+<th>2.5</th>
+<th>-1.5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>向0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>向负无穷</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>-2</td>
+</tr>
+<tr>
+<td>向正无穷</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>-1</td>
+</tr>
+<tr>
+<td>最近偶数（四舍五偶六入）【默认】</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>-2</td>
+</tr>
+</tbody></table>
+<p>最近偶数中，若当前值为中间值（比如0.5）且上一位为奇数，则上一位向上取整到偶数，若上一位为偶数，则保持。</p>
+<p>在二进制中，可以通过观察舍入的部分中是否以1开头后面全为0，若以0开头，说明不到中间值，若以1开头且后不全为0，说明大于中间值</p>
+<table>
+<thead>
+<tr>
+<th>Binary</th>
+<th>Rounded</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>10.00011</td>
+<td>10.00</td>
+<td>后三位011小于中间值100</td>
+</tr>
+<tr>
+<td>10.00110</td>
+<td>10.01</td>
+<td>110大于中间值</td>
+</tr>
+<tr>
+<td>10.11100</td>
+<td>11.00</td>
+<td>100为中间值，上一位1取最近偶数，+1进位</td>
+</tr>
+<tr>
+<td>10.10100</td>
+<td>10.10</td>
+<td>100为中间值，最近偶数为0</td>
+</tr>
+</tbody></table>
+<h3 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h3><p>(-1)^s1M1 2^(E1) * (-1)^s2 M2 2^(E2)</p>
+<p>符号位 Sign &#x3D; s1 异或 s2</p>
+<p>尾数 M &#x3D; M1 * M2</p>
+<p>阶数 E &#x3D; E1 + E2</p>
+<p>当M计算结果大于等于2时，将其右移，直到为1.XXX，并增加阶数E</p>
+<p>如果E超出范围，则溢出</p>
+<p>将M进行舍入使其符合frac的范围</p>
+<h3 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h3><p>(-1)^s1M1 2^(E1) + (-1)^s2 M2 2^(E2)</p>
+<p>对齐小数点</p>
+<p><img src="/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/image-20230622214322623.png" alt="image-20230622214322623"></p>
+<p>当M计算结果大于等于2时，将其右移，直到为1.XXX，并增加阶数E</p>
+<p>当M计算结果小于1时，将其左移，直到为1.XXX，并减小阶数E</p>
+<p>如果E超出范围，则溢出</p>
+<p>将M进行舍入使其符合frac的范围</p>
+<ul>
+<li><p>符合交换律但不符合结合律</p>
+<p>大数+小数 会造成小数的丢失</p>
+<p>(3.14 + 1e10) - 1e10 &#x3D; 0 but 3.14 + (1e10 - 1e10) &#x3D; 3.14</p>
+</li>
+</ul>
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><ul>
+<li>float</li>
+<li>double</li>
+</ul>
+<p>float，double -&gt; int 舍弃小数部分，double可能会舍弃整数部分的部分</p>
+<p>int -&gt; double 不会舍弃</p>
+<p>int -&gt; float 可能会舍弃</p>
+<h1 id="机器编程"><a href="#机器编程" class="headerlink" title="机器编程"></a>机器编程</h1><p>x86 名称来源：intel   第一个处理器叫做8086，16位计算机</p>
+<p>inter 32 位机： IA32</p>
+<p>又称CISC Complex Instruction Set Computer 复杂指令计算机</p>
+<p>ARM：Acorn RISC Machine</p>
+<h2 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h2><ul>
+<li><p>通用寄存器</p>
+<p>x86-64中，有8个寄存器是有两个名字的，当使用%r开头的名字时，会得到64位的空间，当使用%e开头的名字时，会得到32位的空间，旧的8个寄存器是有名字的，新的8个寄存器名字为从%r8-%r15，且每个寄存器都可以直接操作最后一个字节，将其设为0或1，该字节可做单独的寄存器使用，称之为单字节寄存器</p>
+<p><img src="/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/image-20240103152916902.png" alt="image-20240103152916902"></p>
+<ul>
+<li><p>临时数据</p>
+<p>%rax - %rdx</p>
+</li>
+<li><p>内存地址</p>
+<p>%rsi %rdi</p>
+</li>
+<li><p>栈指针</p>
+<p>%rsp</p>
+<p>​	不能随意使用和设置</p>
+</li>
+<li><p>当前执行代码指针</p>
+<p>%rip</p>
+</li>
+</ul>
+</li>
+<li><p>condition code</p>
+<p>是很多指令都会设置的位，但lea不会设置这四个状态码。</p>
+<p>cmp指令，会对两个数做减法操作然后设置这四个状态码，而sub指令给两个参数x，y，操作为x-&#x3D;y。</p>
+<p>test指令，查看a&amp;b的结果，只需两个相同的参数，就可以置位状态码.</p>
+<ul>
+<li><p>CF</p>
+<p>carry flag</p>
+<p>计算结果有进位，无符号数</p>
+</li>
+<li><p>SF</p>
+<p>sign flag</p>
+<p>符号数的计算结果是负值 </p>
+</li>
+<li><p>ZF</p>
+<p>zero flag</p>
+<p>计算结果为0</p>
+</li>
+<li><p>OF</p>
+<p>overflow flag</p>
+<p>有符号的溢出</p>
+</li>
+</ul>
+</li>
+<li><p>段寄存器</p>
+<ul>
+<li><p>CS</p>
+<p>code segment</p>
+<p>代码段地址寄存器，存放代码段的起始地址</p>
+</li>
+<li><p>DS</p>
+<p>data segment</p>
+<p>数据段地址寄存器，存放数据段的起始地址</p>
+</li>
+<li><p>SS</p>
+<p>stack segment</p>
+<p>堆栈段地址寄存器，存放堆栈段的起始地址</p>
+</li>
+<li><p>ES</p>
+<p>extra segment</p>
+<p>附加段地址寄存器，存放附加段的起始地址</p>
+</li>
+</ul>
+</li>
+<li><p>控制寄存器</p>
+<ul>
+<li><p>IP</p>
+<p>Instruction Pointer</p>
+<p>指令指针寄存器，存放代码段中指令的偏移地址</p>
+</li>
+<li><p>FR</p>
+<p>Flags Register</p>
+<p>标志寄存器，存放反应处理器和运行程序执行结果状态的控制标志和条件码标志</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="movq"><a href="#movq" class="headerlink" title="movq"></a>movq</h2><p>以q结尾的指令表示对64位数据进行操作</p>
+<p>movb、movw、movl和movq。 这些指令都执行同样的操作：主要区别在于它们操作的数据大小不同：分别是1、2、4和8字节。</p>
+<p>Imm可理解为立即数，Reg是寄存器，Mem为内存</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Dest</th>
+<th>movq</th>
+<th>C Analog</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Imm</td>
+<td>Reg</td>
+<td>movq $0x4, %rax</td>
+<td>temp &#x3D; 0x4</td>
+</tr>
+<tr>
+<td>Imm</td>
+<td>Mem</td>
+<td>movq $-147, (%rax)</td>
+<td>*p &#x3D; -147</td>
+</tr>
+<tr>
+<td>Reg</td>
+<td>Reg</td>
+<td>movq $rax, %rdx</td>
+<td>temp2 &#x3D; temp1</td>
+</tr>
+<tr>
+<td>Reg</td>
+<td>Mem</td>
+<td>movq $rax, (%rdx)</td>
+<td>*p &#x3D; temp</td>
+</tr>
+<tr>
+<td>Mem</td>
+<td>Reg</td>
+<td>movq (%rax), %rdx</td>
+<td>temp &#x3D; *p</td>
+</tr>
+</tbody></table>
+<p><strong>Example</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">swap</span><span class="params">(<span class="type">long</span> *xp, <span class="type">long</span> *yp)</span>&#123;</span><br><span class="line">    <span class="type">long</span> t0 = *xp;</span><br><span class="line">    <span class="type">long</span> t1 = *yp;</span><br><span class="line">    *xp = t1;</span><br><span class="line">    *yp = t0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>汇编：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">swap:</span><br><span class="line">	movq (%rdi), %rax</span><br><span class="line">	movq (%rsi), %rdx</span><br><span class="line">	movq %rdx, (%rdi)</span><br><span class="line">	movq %rax, (%rsi)</span><br><span class="line">	ret</span><br></pre></td></tr></table></figure>
+
+<p><strong>地址表达式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">movq 8(%rbp), %rdx</span><br></pre></td></tr></table></figure>
+
+<p>D(Rb,Ri,S)  Mem[Reg[Rb]+S*Reg[Ri]+D]</p>
+<p>这里的两个寄存器可以理解为：Rb或者D存储数组首地址，Ri存储数组下标，至于S则为每个元素的大小</p>
+<ul>
+<li>D：偏移常量 1，2或4bytes</li>
+<li>Rb：基地址寄存器，任何16进制整型</li>
+<li>Ri：索引寄存器，除去%rsp外的任何值</li>
+<li>S：scale 1，2，4或8bytes</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>(Rb,Ri)</td>
+<td>Mem[Reg[Rb]+Reg[Ri]]</td>
+</tr>
+<tr>
+<td>D(Rb,Ri)</td>
+<td>Mem[Reg[Rb]+Reg[Ri]+D]</td>
+</tr>
+<tr>
+<td>(Rb,Ri,S)</td>
+<td>Mem[Reg[Rb]+S*Reg[Ri]]</td>
+</tr>
+</tbody></table>
+<h2 id="leaq"><a href="#leaq" class="headerlink" title="leaq"></a>leaq</h2><p>第一个参数是传入地址计算的表达式，第二个参数是保存结果的地址</p>
+<p>本来地址表达式是用来计算地址的，但实际上也可以用来算数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">m12</span><span class="params">(<span class="type">long</span> x)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x*<span class="number">12</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># rdi中值*3，存入rax</span><br><span class="line">leaq (%rdi,%rdi,2), %rax </span><br><span class="line"># rax中值左移两位</span><br><span class="line">salq $2, %rax </span><br></pre></td></tr></table></figure>
+
+<h2 id="一些算数指令"><a href="#一些算数指令" class="headerlink" title="一些算数指令"></a>一些算数指令</h2><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>addq Src,Dest</td>
+<td>Dest &#x3D; Dest + Src</td>
+</tr>
+<tr>
+<td>subq Src,Dest</td>
+<td>Dest &#x3D; Dest  - Src</td>
+</tr>
+<tr>
+<td>imulq Src,Dest</td>
+<td>Dest &#x3D; Dest * Src</td>
+</tr>
+<tr>
+<td>salq Src,Dest</td>
+<td>Dest &#x3D; Dest &lt;&lt; Src</td>
+</tr>
+<tr>
+<td>sarq Src,Dest</td>
+<td>Dest &#x3D; Dest &gt;&gt; Src（算数）</td>
+</tr>
+<tr>
+<td>shrq Src,Dest</td>
+<td>Dest &#x3D; Dest &gt;&gt; Src（逻辑）</td>
+</tr>
+<tr>
+<td>xorq Src,Dest</td>
+<td>Dest &#x3D; Dest ^ Src</td>
+</tr>
+<tr>
+<td>andq Src,Dest</td>
+<td>Dest &#x3D; Dest &amp; Src</td>
+</tr>
+<tr>
+<td>orq Src,Dest</td>
+<td>Dest &#x3D; Dest | Src</td>
+</tr>
+<tr>
+<td>incq Dest</td>
+<td>Dest &#x3D; Dest + 1</td>
+</tr>
+<tr>
+<td>decq Dest</td>
+<td>Dest &#x3D; Dest - 1</td>
+</tr>
+<tr>
+<td>negq Dest</td>
+<td>Dest &#x3D; - Dest</td>
+</tr>
+<tr>
+<td>notq Dest</td>
+<td>Dest &#x3D; ~ Dest</td>
+</tr>
+</tbody></table>
+<h2 id="SetX"><a href="#SetX" class="headerlink" title="SetX"></a>SetX</h2><p>可以根据状态码寄存器来设置单字节寄存器</p>
+<table>
+<thead>
+<tr>
+<th>SetX</th>
+<th>比较</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sete</td>
+<td>ZF</td>
+<td>等于0</td>
+</tr>
+<tr>
+<td>setne</td>
+<td>~ZF</td>
+<td>不等于0</td>
+</tr>
+<tr>
+<td>sets</td>
+<td>SF</td>
+<td>负数</td>
+</tr>
+<tr>
+<td>setns</td>
+<td>~SF</td>
+<td>非负数</td>
+</tr>
+<tr>
+<td>setg</td>
+<td><del>(SF^OF)&amp;</del>ZF</td>
+<td>大于（补码）</td>
+</tr>
+<tr>
+<td>setge</td>
+<td>~(SF^OF)</td>
+<td>大于等于（补码）</td>
+</tr>
+<tr>
+<td>setl</td>
+<td>(SF^OF)</td>
+<td>小于（补码）</td>
+</tr>
+<tr>
+<td>setle</td>
+<td>(SF^OF)</td>
+<td>小于等于（补码）</td>
+</tr>
+<tr>
+<td>seta</td>
+<td><del>CF&amp;</del>ZF</td>
+<td>Above（无符号数）</td>
+</tr>
+<tr>
+<td>setb</td>
+<td>CF</td>
+<td>Below（无符号数）</td>
+</tr>
+</tbody></table>
+<p><strong>测试</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">gt</span> <span class="params">(<span class="type">long</span> x,<span class="type">long</span> y)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x &gt; y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Register</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%rdi</td>
+<td>x</td>
+</tr>
+<tr>
+<td>%rsi</td>
+<td>y</td>
+</tr>
+<tr>
+<td>%rax</td>
+<td>return</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cmpq %rsi, %rdi # compare x:y</span><br><span class="line">setg %al 		# set when &gt;</span><br><span class="line"># setg 指令只会操作最低一位字节，，而不会影响其他位，故需要一个复制指令，将剩余部分填充为0</span><br><span class="line">movzbl %al, %eax # zero rest of %rax</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+
+<h2 id="JX"><a href="#JX" class="headerlink" title="JX"></a>JX</h2><table>
+<thead>
+<tr>
+<th>JX</th>
+<th>Condition</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>jmp</td>
+<td>1</td>
+<td>无条件跳转</td>
+</tr>
+<tr>
+<td>je</td>
+<td>ZF</td>
+<td>Equal&#x2F;Zero</td>
+</tr>
+<tr>
+<td>jne</td>
+<td>~ZF</td>
+<td>Not Equal&#x2F;Not Zero</td>
+</tr>
+<tr>
+<td>js</td>
+<td>SF</td>
+<td>Negative</td>
+</tr>
+<tr>
+<td>jns</td>
+<td>~SF</td>
+<td>Nonnegative</td>
+</tr>
+<tr>
+<td>jg</td>
+<td><del>(SF^OF)&amp;</del>ZF</td>
+<td>Greater(Signed)</td>
+</tr>
+<tr>
+<td>jge</td>
+<td>~(SF^OF)</td>
+<td>Greater or Equal(Signed)</td>
+</tr>
+<tr>
+<td>jl</td>
+<td>(SF^OF)</td>
+<td>Less(Signed)</td>
+</tr>
+<tr>
+<td>jle</td>
+<td>(SF^OF)|ZF</td>
+<td>Lessor Equal(Signed)</td>
+</tr>
+<tr>
+<td>ja</td>
+<td><del>CF&amp;</del>ZF</td>
+<td>Above(unsigned)</td>
+</tr>
+<tr>
+<td>jb</td>
+<td>CF</td>
+<td>Below(unsigned)</td>
+</tr>
+</tbody></table>
+<p><strong>条件分支</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">absdiff</span><span class="params">(<span class="type">long</span> x, <span class="type">long</span> y)</span>&#123;</span><br><span class="line">    <span class="type">long</span> res;</span><br><span class="line">    <span class="keyword">if</span>(x&gt;y)&#123;</span><br><span class="line">        res = x - y;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res = y-x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">absdiff:</span><br><span class="line">	cmpq	%rsi, %rdi</span><br><span class="line">	jle		.L4</span><br><span class="line">	movq	%rdi, %rax</span><br><span class="line">	subq	%rsi, %rax</span><br><span class="line">	ret</span><br><span class="line">  .L4:</span><br><span class="line">  	movq	%rsi, %rax</span><br><span class="line">  	subq	%rdi, %rax</span><br><span class="line">  	ret</span><br></pre></td></tr></table></figure>
+
+<p>有的时候分支情况可以使用条件移动实现：当res&#x3D;boolean？1-2：2-1这种情况的时候，可以将1-2的值保存到res中，2-1的值保存到另一个变量中，接着再查看boolean的结果，若boolean为false则将另一个变量的值赋给res。</p>
+<p>但如果两个分支都是复杂计算时或者当分支会改变程序状态时不建议这样做。</p>
+<p><strong>循环</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">pcount_do</span><span class="params">(<span class="type">unsigned</span> <span class="type">long</span> x)</span>&#123;</span><br><span class="line">    <span class="type">long</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        result += x &amp; <span class="number">0x1</span>;</span><br><span class="line">        x&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    &#125;<span class="keyword">while</span>(x);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用goto的话</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">pcount_do</span><span class="params">(<span class="type">unsigned</span> <span class="type">long</span> x)</span>&#123;</span><br><span class="line">    <span class="type">long</span> result = <span class="number">0</span>;</span><br><span class="line">    loop:</span><br><span class="line">    result += x &amp; <span class="number">0x1</span>;</span><br><span class="line">    x&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(x) <span class="keyword">goto</span> loop;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>register</th>
+<th>use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%rdi</td>
+<td>x</td>
+</tr>
+<tr>
+<td>%rax</td>
+<td>result</td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pcount_do:</span><br><span class="line">	movl	$0, %eax</span><br><span class="line">  .L2:</span><br><span class="line">  	movq	%rdi, %rdx</span><br><span class="line">  	andl	$1,   %edx	# t = x&amp;0x1</span><br><span class="line">  	addq	%rdx, %rax	# result += t</span><br><span class="line">  	shrq	%rdi		# x &gt;&gt;= 1</span><br><span class="line">  	jne		.L2			# if(x) goto loop</span><br><span class="line">  	rep; ret</span><br></pre></td></tr></table></figure>
+
+<p>如果是while的循环，会将条件判断上面加一个goto，在循环之前先跳到判断，在判断中跳到循环体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(test)&#123;</span><br><span class="line">    body</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">goto</span> test;</span><br><span class="line">loop:</span><br><span class="line">	body</span><br><span class="line">test:</span><br><span class="line">	<span class="keyword">if</span>(test)</span><br><span class="line">        <span class="keyword">goto</span> loop;</span><br><span class="line">done:</span><br></pre></td></tr></table></figure>
+
+<p>个人认为可以像下面这样</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">test:</span><br><span class="line">	<span class="keyword">if</span>(test)</span><br><span class="line">        <span class="keyword">goto</span> done;</span><br><span class="line">	body</span><br><span class="line">	<span class="keyword">goto</span> test;</span><br><span class="line">done:</span><br></pre></td></tr></table></figure>
+
+<p>for循环的变化</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(init; test; update)&#123;</span><br><span class="line">    body;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line">init;</span><br><span class="line"><span class="keyword">while</span>(test)&#123;</span><br><span class="line">    body;</span><br><span class="line">    update;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line">init;</span><br><span class="line"><span class="keyword">if</span>(!test)&#123;</span><br><span class="line">    <span class="keyword">goto</span> done;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">    body;</span><br><span class="line">    update;</span><br><span class="line">&#125;<span class="keyword">while</span>(test);</span><br><span class="line">done:</span><br></pre></td></tr></table></figure>
+
+<p><strong>switch case</strong></p>
+<p>switch的机器码中会将所有case块按顺序编译到一起，接着维护一个代码表，标识了各个case块的起始索引。</p>
+<ul>
+<li>case 0-..-6 ，则编译器会把小于0和大于6的情况走default<br>  有个很有意思的事情就是，小于0的数字，负数如果当作无符号的化是一个非常大的数，所以这里只需要比较是否大于6，如果最小值是个负数，则会添加一定的偏移量使其变为0<br>  但如果我case 1和3、4、5、6，0和2还会建表吗？会，但其指针会指向default</li>
+<li>如果case 0和10000，编译器不会将中间所有的值都建表，而是会进行优化比如优化为if-else，判断逻辑有可能是建立一棵树jump tree</li>
+</ul>
+<p><img src="/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/image-20240103175348708.png" alt="image-20240103175348708"></p>
+<h2 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h2><ul>
+<li><p>stack</p>
+<p>  stack用于管理程序状态</p>
+<p>  call的时候压入即将要调用的方法的返回地址，return的时候返回信息，其余信息直接丢弃，很符合栈的特性</p>
+<p>  x86中，在rsp寄存器中保存栈顶指针，栈顶指针会随着入栈出栈递减或递增（栈是向下增长的，所以入栈是递减）</p>
+</li>
+<li><p>流程调用：call</p>
+</li>
+<li><p>返回地址：调用地址的下一条</p>
+</li>
+<li><p>流程返回：ret</p>
+</li>
+</ul>
+<p>在32位机种，参数在栈上传递，64位机参数使用寄存器传递</p>
+<p>一个方法调用例子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">A</span><span class="params">(<span class="type">long</span>* p, <span class="type">long</span> val)</span>&#123;</span><br><span class="line">    <span class="type">long</span> x = *p;</span><br><span class="line">    <span class="type">long</span> y = x + val;</span><br><span class="line">    *p = y;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">long</span> <span class="title function_">B</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="type">long</span> v1 = <span class="number">15213</span>;</span><br><span class="line">    <span class="type">long</span> v2 = A(&amp;v1, <span class="number">3000</span>);</span><br><span class="line">    <span class="keyword">return</span> v1 + v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">B:</span><br><span class="line">	# rsp存储的是栈顶指针，栈是向下分配空间的，这里对栈顶指针做减法意图是将栈顶指针向下扩容16个空间</span><br><span class="line">	subq $16, %rsp</span><br><span class="line">	# 在栈顶指针网上8个地址写入15213</span><br><span class="line">	movq $15213, 8(%rsp)</span><br><span class="line">	# 在esi寄存器存入3000</span><br><span class="line">	movl $3000, %esi</span><br><span class="line">	# 将rsp中存的值，也就是栈顶指针+8后的结果存入rdi</span><br><span class="line">	leaq 8(%rsp), %rdi</span><br><span class="line">	# 调用A函数</span><br><span class="line">	call A</span><br><span class="line">	# rax中存储返回值，将15123加到rax上</span><br><span class="line">	addq 8(%rsp), %rax</span><br><span class="line">	# 栈顶指针做加法，相当于释放空间，这里将刚开始分配的空间释放</span><br><span class="line">	# 所以说这部分空间是要手动释放的，应该是在ret的时候会直接将栈顶指针数据作为返回地址</span><br><span class="line">	addq $16, %rsp</span><br><span class="line">	# 返回</span><br><span class="line">	ret</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<p>寄存器中不应该用于存储临时值，在某个方法caller调用其他方法callee之前应当先存到内存。因为寄存器中的值很有可能被callee改写。</p>
+<h2 id="寄存器常见角色-约定"><a href="#寄存器常见角色-约定" class="headerlink" title="寄存器常见角色(约定)"></a>寄存器常见角色(约定)</h2><p><img src="/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/image-20240104162218194.png" alt="image-20240104162218194"></p>
+<p><img src="/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/image-20240104162318496.png" alt="image-20240104162318496"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">long</span> <span class="title function_">A</span><span class="params">(<span class="type">long</span>* p, <span class="type">long</span> val)</span>&#123;</span><br><span class="line">    <span class="type">long</span> x = *p;</span><br><span class="line">    <span class="type">long</span> y = x + val;</span><br><span class="line">    *p = y;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">long</span> <span class="title function_">B</span><span class="params">(<span class="type">long</span> x)</span>&#123;</span><br><span class="line">    <span class="type">long</span> v1 = <span class="number">15213</span>;</span><br><span class="line">    <span class="type">long</span> v2 = A(&amp;v1, <span class="number">3000</span>);</span><br><span class="line">    <span class="keyword">return</span> x + v2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">B:</span><br><span class="line">	# 由于本方法有参数x，参数是在rdi中存着的，且在方法中会调用其他方法，也就是rdi会被复用，所以必须将rdi中的数据存起来，这里使用了rbx寄存器，因为约定中rbx寄存器是callee使用后必须恢复的，同样的，第一步也应该将rbx中原有的值备份，这里选择备份到栈上，当然同时会修改栈顶指针</span><br><span class="line">	pushq %rbx</span><br><span class="line">	# rsp存储的是栈顶指针，栈是向下分配空间的，这里对栈顶指针做减法意图是将栈顶指针向下扩容16个空间</span><br><span class="line">	subq $16, %rsp</span><br><span class="line">	# 这里将参数x备份到rbx上</span><br><span class="line">	movq %rdi, %rbx</span><br><span class="line">	# 在栈顶指针网上8个地址写入15213</span><br><span class="line">	movq $15213, 8(%rsp)</span><br><span class="line">	# 在esi寄存器存入3000</span><br><span class="line">	movl $3000, %esi</span><br><span class="line">	# 将rsp中存的值，也就是栈顶指针+8后的结果存入rdi</span><br><span class="line">	leaq 8(%rsp), %rdi</span><br><span class="line">	# 调用A函数</span><br><span class="line">	call A</span><br><span class="line">	# rax中存储返回值，将x加到rax上</span><br><span class="line">	addq %rbx, %rax</span><br><span class="line">	# 栈顶指针做加法，相当于释放空间，这里将刚开始分配的空间释放</span><br><span class="line">	# 所以说这部分空间是要手动释放的，应该是在ret的时候会直接将栈顶指针数据作为返回地址</span><br><span class="line">	addq $16, %rsp</span><br><span class="line">	# popq 将栈顶数据存到rbx中，这里正是刚开始备份的rbx数据，同时恢复栈顶指针到返回地址</span><br><span class="line">	popq %rbx</span><br><span class="line">	# 返回</span><br><span class="line">	ret</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></div><div class="post_share"><div class="social-share" data-image="/assets/img/tx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/26/experience/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AEedge%E6%B5%8F%E8%A7%88%E5%99%A8/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AEedge%E6%B5%8F%E8%A7%88%E5%99%A8/" title="windows集成身份验证配置edge浏览器"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">windows集成身份验证配置edge浏览器</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/06/experience/%E7%BA%A2%E9%BB%91%E6%A0%91/%E7%BA%A2%E9%BB%91%E6%A0%91/" title="红黑树"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">红黑树</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Boranget</div><div class="author-info__description">整理的一些笔记和平时的一些经验</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Boranget"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">笔记分类是一些看书或者网课做的笔记，经验分类一般是平时碰到的问题或者折腾的一些小东西。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B5%84%E6%96%99"><span class="toc-number">1.</span> <span class="toc-text">资料</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bits%EF%BC%8CBytes%EF%BC%8CInteger"><span class="toc-number">2.</span> <span class="toc-text">Bits，Bytes，Integer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97"><span class="toc-number">2.1.</span> <span class="toc-text">布尔运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%8D%E7%A7%BB%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.</span> <span class="toc-text">位移操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%95%B4%E5%9E%8B"><span class="toc-number">2.3.</span> <span class="toc-text">二进制转整型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81%E7%9A%84%E6%89%A9%E5%85%85"><span class="toc-number">2.4.</span> <span class="toc-text">补码的扩充</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%AA%E5%8F%96"><span class="toc-number">2.5.</span> <span class="toc-text">截取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97"><span class="toc-number">2.6.</span> <span class="toc-text">计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsigned-Addition"><span class="toc-number">2.6.1.</span> <span class="toc-text">Unsigned Addition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Two%E2%80%98s-Complement-Addition"><span class="toc-number">2.6.2.</span> <span class="toc-text">Two‘s Complement Addition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Unsigned-Multiplication"><span class="toc-number">2.6.3.</span> <span class="toc-text">Unsigned Multiplication</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Signed-Multiplication"><span class="toc-number">2.6.4.</span> <span class="toc-text">Signed Multiplication</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%BB%E4%BD%8D%E8%BF%90%E7%AE%97-x3D-x2F-2"><span class="toc-number">2.6.5.</span> <span class="toc-text">移位运算 &#x3D; *&#x2F;2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%96%E8%B4%9F"><span class="toc-number">2.6.6.</span> <span class="toc-text">取负</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%A2%E5%87%BA"><span class="toc-number">2.6.7.</span> <span class="toc-text">溢出</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E5%AD%98%E5%82%A8"><span class="toc-number">3.</span> <span class="toc-text">字节存储</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E9%95%BF"><span class="toc-number">3.1.</span> <span class="toc-text">字长</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E8%8A%82%E6%8E%92%E5%BA%8F"><span class="toc-number">3.2.</span> <span class="toc-text">字节排序</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">浮点数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#IEEE-%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">IEEE 浮点数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Denormalized-Values"><span class="toc-number">4.2.</span> <span class="toc-text">Denormalized Values</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E5%B1%9E%E6%80%A7"><span class="toc-number">4.3.</span> <span class="toc-text">一些特殊属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97"><span class="toc-number">4.4.</span> <span class="toc-text">运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rounding"><span class="toc-number">4.4.1.</span> <span class="toc-text">rounding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%98%E6%B3%95"><span class="toc-number">4.4.2.</span> <span class="toc-text">乘法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E6%B3%95"><span class="toc-number">4.4.3.</span> <span class="toc-text">加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="toc-number">4.4.4.</span> <span class="toc-text">类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E7%BC%96%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">机器编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">5.1.</span> <span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#movq"><span class="toc-number">5.2.</span> <span class="toc-text">movq</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#leaq"><span class="toc-number">5.3.</span> <span class="toc-text">leaq</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%AE%97%E6%95%B0%E6%8C%87%E4%BB%A4"><span class="toc-number">5.4.</span> <span class="toc-text">一些算数指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SetX"><span class="toc-number">5.5.</span> <span class="toc-text">SetX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JX"><span class="toc-number">5.6.</span> <span class="toc-text">JX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-number">5.7.</span> <span class="toc-text">流程控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E5%B8%B8%E8%A7%81%E8%A7%92%E8%89%B2-%E7%BA%A6%E5%AE%9A"><span class="toc-number">5.8.</span> <span class="toc-text">寄存器常见角色(约定)</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/27/experience/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/" title="windows服务部署jar">windows服务部署jar</a><time datetime="2025-02-27T08:35:19.000Z" title="更新于 2025-02-27 16:35:19">2025-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/" title="大白菜U盘">大白菜U盘</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/" title="联想B300一体机刷BIOS">联想B300一体机刷BIOS</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/notes/Elasticsearch/Elasticsearch/" title="Elasticsearch">Elasticsearch</a><time datetime="2024-12-27T07:35:19.000Z" title="更新于 2024-12-27 15:35:19">2024-12-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/experience/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/" title="浏览器的各种存储">浏览器的各种存储</a><time datetime="2024-12-17T02:35:19.000Z" title="更新于 2024-12-17 10:35:19">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Boranget</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

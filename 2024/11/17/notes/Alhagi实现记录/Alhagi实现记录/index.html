@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Alhagi实现记录 | Boranget.博客</title><meta name="author" content="Boranget"><meta name="copyright" content="Boranget"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="参考资料https:&#x2F;&#x2F;spec.commonmark.org&#x2F;0.31.2&#x2F; CommonMark解析策略 先将文档分解为块结构，但不解析文本，链接引用定义可以先收集起来 将标题和段落中的纯文本解析为行内元素，此时可使用之前收集好的链接引用定义  强调和链接的解析策略使用分隔符栈来解析，每个栈元素需要包含如下信息：  分隔符类型[, ![, *, _ 分隔符数量？ 分隔符是否激活状态 分隔符是否">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Alhagi实现记录">
+<meta property="og:url" content="https://boranget.github.io/2024/11/17/notes/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Boranget.博客">
+<meta property="og:description" content="参考资料https:&#x2F;&#x2F;spec.commonmark.org&#x2F;0.31.2&#x2F; CommonMark解析策略 先将文档分解为块结构，但不解析文本，链接引用定义可以先收集起来 将标题和段落中的纯文本解析为行内元素，此时可使用之前收集好的链接引用定义  强调和链接的解析策略使用分隔符栈来解析，每个栈元素需要包含如下信息：  分隔符类型[, ![, *, _ 分隔符数量？ 分隔符是否激活状态 分隔符是否">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boranget.github.io/assets/img/tx.png">
+<meta property="article:published_time" content="2024-11-17T13:35:19.000Z">
+<meta property="article:modified_time" content="2024-11-17T13:35:19.000Z">
+<meta property="article:author" content="Boranget">
+<meta property="article:tag" content="编辑器">
+<meta property="article:tag" content="markdown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boranget.github.io/assets/img/tx.png"><link rel="shortcut icon" href="/assets/img/tx.png"><link rel="canonical" href="https://boranget.github.io/2024/11/17/notes/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Alhagi实现记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-17 21:35:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Boranget.博客"><img class="site-icon" src="/assets/img/tx.png"/><span class="site-name">Boranget.博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Alhagi实现记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-17T13:35:19.000Z" title="发表于 2024-11-17 21:35:19">2024-11-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-17T13:35:19.000Z" title="更新于 2024-11-17 21:35:19">2024-11-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notes/">notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Alhagi实现记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://spec.commonmark.org/0.31.2/">https://spec.commonmark.org/0.31.2/</a></p>
+<h1 id="CommonMark解析策略"><a href="#CommonMark解析策略" class="headerlink" title="CommonMark解析策略"></a>CommonMark解析策略</h1><ol>
+<li>先将文档分解为块结构，但不解析文本，链接引用定义可以先收集起来</li>
+<li>将标题和段落中的纯文本解析为行内元素，此时可使用之前收集好的链接引用定义</li>
+</ol>
+<h2 id="强调和链接的解析策略"><a href="#强调和链接的解析策略" class="headerlink" title="强调和链接的解析策略"></a>强调和链接的解析策略</h2><p>使用分隔符栈来解析，每个栈元素需要包含如下信息：</p>
+<ul>
+<li>分隔符类型<code>[</code>, <code>![</code>, <code>*</code>, <code>_</code></li>
+<li>分隔符数量？</li>
+<li>分隔符是否激活状态</li>
+<li>分隔符是否为潜在的开启符号，或者潜在的关闭符号，或者都是</li>
+</ul>
+<p>当碰到符号<code>]</code>的时候，调用<code>look for link or image</code></p>
+<p>当碰到输入结束时，调用强调语法处理流程，此时直到碰到栈底元素为<code>NULL</code></p>
+<h4 id="look-for-link-or-image"><a href="#look-for-link-or-image" class="headerlink" title="look for link or image"></a>look for link or image</h4><p> 从分隔符栈顶倒找<code>[</code>或者<code>![</code></p>
+<ul>
+<li>如果没找到，则返回纯文本的<code>]</code></li>
+<li>如果找到一个，但没激活，则从栈里移除那个没激活的分隔符，接着返回纯文本的<code>]</code></li>
+<li>如果找到一个并且是激活的，则查看是否为行内&#x2F;引用&#x2F;压缩&#x2F;short cut的链接或者图像<ul>
+<li>如果不是，则从栈中移除开始标签，并且返回纯文本的<code>]</code></li>
+<li>如果是，则<ul>
+<li>返回链接或者图像节点，添加到开启符号的文本节点后</li>
+<li>在当前行内元素中执行<code>process emphasis</code>，将<code>[</code>作为栈底（碰到<code>[</code>则结束）</li>
+<li>移除栈中的<code>[</code></li>
+<li>如果当前行内元素是链接而不是图片，则将前面所有的<code>[</code>符号都设为非激活状态，防止后面解析到嵌套的链接</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="process-emphasis"><a href="#process-emphasis" class="headerlink" title="process emphasis"></a>process emphasis</h3><p>该流程需要一个参数<code>stack_bottom</code>，来确认可以抵达的元素，NULL代表可以到栈底，否则，在碰到stack_bottom中的元素之前停止查找。</p>
+<p>将当前指针current_position指向stack_bottom上面的一个元素</p>
+<p>为每种分隔符类型（<code>_*</code>）都设置一个openers_bottom，初始化为stack_bottom,根据关闭分隔符运行的长度（模3）和关闭分隔符是否同时为开启分隔符来索引，用于记录每种分隔符类型搜索开启分隔符的下限。</p>
+<p>接着循环如下步骤直到没有潜在的关闭结构</p>
+<ul>
+<li>将当前指针向前移动（栈底向栈顶），直到找到第一个潜在的关闭结构（有可能当前符号就是）</li>
+<li>向栈底移动（这里应该不是动当前指针），注意要在stack_bottom和当前分隔符类型的openers_bottom之上，找到第一个匹配的（相同的分隔符以及数量）开启结构<ul>
+<li>如果找到<ul>
+<li>判断是强调还是强烈强调，如果开启结构和结束结构的长度都大于等于2，则为强烈强调，否则为强调（强调优先级低）</li>
+<li>在开启节点的文本节点后插入对应的强调节点</li>
+<li>移除开启结构和结束结构中间的所有分隔符</li>
+<li>从开启结构和结束结构中移除一个或者两个分隔符（根据当前判断为强调还是强烈强调），如果该结构变空，则从栈中移除，同时设置当前指针为下一个元素</li>
+</ul>
+</li>
+<li>如果没有找到<ul>
+<li>设置当前类型分隔符的openers_bottom到当前指针之前，因为当前指针之前没有当前类型的开启结构了</li>
+<li>如果说当前指针所指的关闭结构并不同时是一个开启结构，则从栈中移除当前结构，因为它也已经当不成关闭结构了</li>
+<li>设置当前指针为下一个元素</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="源码阅读记录"><a href="#源码阅读记录" class="headerlink" title="源码阅读记录"></a>源码阅读记录</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 反斜杠</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">C_BACKSLASH</span> = <span class="number">92</span>;</span><br><span class="line"><span class="comment">// 依次为十六进制的|十进制的|实体名格式的HTML实体匹配</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">ENTITY</span> = <span class="string">&quot;&amp;(?:#x[a-f0-9]&#123;1,6&#125;|#[0-9]&#123;1,7&#125;|[a-z][a-z0-9]&#123;1,31&#125;);&quot;</span>;</span><br><span class="line"><span class="comment">// HTML标签名</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">TAGNAME</span> = <span class="string">&quot;[A-Za-z][A-Za-z0-9-]*&quot;</span>;</span><br><span class="line"><span class="comment">// HTML属性名</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">ATTRIBUTENAME</span> = <span class="string">&quot;[a-zA-Z_:][a-zA-Z0-9:._-]*&quot;</span>;</span><br><span class="line"><span class="comment">// 非引号字符</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">UNQUOTEDVALUE</span> = <span class="string">&quot;[^\&quot;&#x27;=&lt;&gt;`\\x00-\\x20]+&quot;</span>;</span><br><span class="line"><span class="comment">// 被单引号括住的值</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">SINGLEQUOTEDVALUE</span> = <span class="string">&quot;&#x27;[^&#x27;]*&#x27;&quot;</span>;</span><br><span class="line"><span class="comment">// 被双引号括住的值</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">DOUBLEQUOTEDVALUE</span> = <span class="string">&#x27;&quot;[^&quot;]*&quot;&#x27;</span>;</span><br><span class="line"><span class="comment">// 属性值的组成</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">ATTRIBUTEVALUE</span> =</span><br><span class="line">    <span class="string">&quot;(?:&quot;</span> +</span><br><span class="line">    <span class="variable constant_">UNQUOTEDVALUE</span> +</span><br><span class="line">    <span class="string">&quot;|&quot;</span> +</span><br><span class="line">    <span class="variable constant_">SINGLEQUOTEDVALUE</span> +</span><br><span class="line">    <span class="string">&quot;|&quot;</span> +</span><br><span class="line">    <span class="variable constant_">DOUBLEQUOTEDVALUE</span> +</span><br><span class="line">    <span class="string">&quot;)&quot;</span>;</span><br><span class="line"><span class="comment">// 属性值定义</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">ATTRIBUTEVALUESPEC</span> = <span class="string">&quot;(?:&quot;</span> + <span class="string">&quot;\\s*=&quot;</span> + <span class="string">&quot;\\s*&quot;</span> + <span class="variable constant_">ATTRIBUTEVALUE</span> + <span class="string">&quot;)&quot;</span>;</span><br><span class="line"><span class="comment">// 属性定义</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">ATTRIBUTE</span> = <span class="string">&quot;(?:&quot;</span> + <span class="string">&quot;\\s+&quot;</span> + <span class="variable constant_">ATTRIBUTENAME</span> + <span class="variable constant_">ATTRIBUTEVALUESPEC</span> + <span class="string">&quot;?)&quot;</span>;</span><br><span class="line"><span class="comment">// 开始标签</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">OPENTAG</span> = <span class="string">&quot;&lt;&quot;</span> + <span class="variable constant_">TAGNAME</span> + <span class="variable constant_">ATTRIBUTE</span> + <span class="string">&quot;*&quot;</span> + <span class="string">&quot;\\s*/?&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// 结束标签</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">CLOSETAG</span> = <span class="string">&quot;&lt;/&quot;</span> + <span class="variable constant_">TAGNAME</span> + <span class="string">&quot;\\s*[&gt;]&quot;</span>;</span><br><span class="line"><span class="comment">// HTML注释</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">HTMLCOMMENT</span> = <span class="string">&quot;&lt;!--&gt;|&lt;!---&gt;|&lt;!--[\\s\\S]*?--&gt;&quot;</span></span><br><span class="line"><span class="comment">// PI</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">PROCESSINGINSTRUCTION</span> = <span class="string">&quot;[&lt;][?][\\s\\S]*?[?][&gt;]&quot;</span>;</span><br><span class="line"><span class="comment">// 声明</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">DECLARATION</span> = <span class="string">&quot;&lt;![A-Za-z]+&quot;</span> + <span class="string">&quot;[^&gt;]*&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// CDATA</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">CDATA</span> = <span class="string">&quot;&lt;!\\[CDATA\\[[\\s\\S]*?\\]\\]&gt;&quot;</span>;</span><br><span class="line"><span class="comment">// HTML标签</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">HTMLTAG</span> =</span><br><span class="line">    <span class="string">&quot;(?:&quot;</span> +</span><br><span class="line">    <span class="variable constant_">OPENTAG</span> +</span><br><span class="line">    <span class="string">&quot;|&quot;</span> +</span><br><span class="line">    <span class="variable constant_">CLOSETAG</span> +</span><br><span class="line">    <span class="string">&quot;|&quot;</span> +</span><br><span class="line">    <span class="variable constant_">HTMLCOMMENT</span> +</span><br><span class="line">    <span class="string">&quot;|&quot;</span> +</span><br><span class="line">    <span class="variable constant_">PROCESSINGINSTRUCTION</span> +</span><br><span class="line">    <span class="string">&quot;|&quot;</span> +</span><br><span class="line">    <span class="variable constant_">DECLARATION</span> +</span><br><span class="line">    <span class="string">&quot;|&quot;</span> +</span><br><span class="line">    <span class="variable constant_">CDATA</span> +</span><br><span class="line">    <span class="string">&quot;)&quot;</span>;</span><br><span class="line"><span class="comment">// HTML开头的行</span></span><br><span class="line"><span class="keyword">var</span> reHtmlTag = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&quot;^&quot;</span> + <span class="variable constant_">HTMLTAG</span>);</span><br><span class="line"><span class="comment">// 反斜杠或者正则表达式</span></span><br><span class="line"><span class="keyword">var</span> reBackslashOrAmp = <span class="regexp">/[\\&amp;]/</span>;</span><br><span class="line"><span class="comment">// 允许被转义的字符</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">ESCAPABLE</span> = <span class="string">&quot;[!\&quot;#$%&amp;&#x27;()*+,./:;&lt;=&gt;?@[\\\\\\]^_`&#123;|&#125;~-]&quot;</span>;</span><br><span class="line"><span class="comment">// 转义字符或者HTML实体，gi为flag，代表全局+不区分大小写</span></span><br><span class="line"><span class="keyword">var</span> reEntityOrEscapedChar = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="string">&quot;\\\\&quot;</span> + <span class="variable constant_">ESCAPABLE</span> + <span class="string">&quot;|&quot;</span> + <span class="variable constant_">ENTITY</span>, <span class="string">&quot;gi&quot;</span>);</span><br><span class="line"><span class="comment">// xml中的特殊字符（需要转义）</span></span><br><span class="line"><span class="keyword">var</span> <span class="variable constant_">XMLSPECIAL</span> = <span class="string">&#x27;[&amp;&lt;&gt;&quot;]&#x27;</span>;</span><br><span class="line"><span class="comment">// 搜索全局的XML特殊字符</span></span><br><span class="line"><span class="keyword">var</span> reXmlSpecial = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="variable constant_">XMLSPECIAL</span>, <span class="string">&quot;g&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%BE%91%E5%99%A8/">编辑器</a><a class="post-meta__tags" href="/tags/markdown/">markdown</a></div><div class="post_share"><div class="social-share" data-image="/assets/img/tx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/12/02/notes/Oracle%E6%95%B0%E6%8D%AE%E5%BA%93/Oracle%E6%95%B0%E6%8D%AE%E5%BA%93/" title="Oracle数据库"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Oracle数据库</div></div></a></div><div class="next-post pull-right"><a href="/2024/11/17/notes/CommonMarkdown/CommonMarkdown/" title="CommonMarkdown"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CommonMarkdown</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/08/06/notes/md%E7%BC%96%E8%BE%91%E5%99%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/md%E7%BC%96%E8%BE%91%E5%99%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/" title="md编辑器相关技术记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">md编辑器相关技术记录</div></div></a></div><div><a href="/2024/05/08/notes/%E7%BC%96%E8%BE%91%E5%99%A8LSP%E6%9C%8D%E5%8A%A1/%E7%BC%96%E8%BE%91%E5%99%A8LSP%E6%9C%8D%E5%8A%A1/" title="编辑器LSP服务"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-08</div><div class="title">编辑器LSP服务</div></div></a></div><div><a href="/2024/11/17/notes/CommonMarkdown/CommonMarkdown/" title="CommonMarkdown"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-17</div><div class="title">CommonMarkdown</div></div></a></div><div><a href="/2024/08/06/notes/markdown%E8%A7%84%E8%8C%83%E6%95%99%E7%A8%8B/markdown%E8%A7%84%E8%8C%83%E6%95%99%E7%A8%8B/" title="markdown规范教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">markdown规范教程</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Boranget</div><div class="author-info__description">整理的一些笔记和平时的一些经验</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Boranget"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">笔记分类是一些看书或者网课做的笔记，经验分类一般是平时碰到的问题或者折腾的一些小东西。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CommonMark%E8%A7%A3%E6%9E%90%E7%AD%96%E7%95%A5"><span class="toc-number">2.</span> <span class="toc-text">CommonMark解析策略</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%BA%E8%B0%83%E5%92%8C%E9%93%BE%E6%8E%A5%E7%9A%84%E8%A7%A3%E6%9E%90%E7%AD%96%E7%95%A5"><span class="toc-number">2.1.</span> <span class="toc-text">强调和链接的解析策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#look-for-link-or-image"><span class="toc-number">2.1.0.1.</span> <span class="toc-text">look for link or image</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#process-emphasis"><span class="toc-number">2.1.1.</span> <span class="toc-text">process emphasis</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95"><span class="toc-number">3.</span> <span class="toc-text">源码阅读记录</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/27/experience/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/" title="windows服务部署jar">windows服务部署jar</a><time datetime="2025-02-27T08:35:19.000Z" title="更新于 2025-02-27 16:35:19">2025-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/" title="大白菜U盘">大白菜U盘</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/" title="联想B300一体机刷BIOS">联想B300一体机刷BIOS</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/notes/Elasticsearch/Elasticsearch/" title="Elasticsearch">Elasticsearch</a><time datetime="2024-12-27T07:35:19.000Z" title="更新于 2024-12-27 15:35:19">2024-12-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/experience/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/" title="浏览器的各种存储">浏览器的各种存储</a><time datetime="2024-12-17T02:35:19.000Z" title="更新于 2024-12-17 10:35:19">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Boranget</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

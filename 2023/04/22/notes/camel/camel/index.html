@@ -1,0 +1,311 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>camel | Boranget.博客</title><meta name="author" content="Boranget"><meta name="copyright" content="Boranget"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一些专业名词EIP: enterprise integration pattern SLA: service-level agreement 服务等级协议 认识CamelCamel的消息模型MESSAGEmessage按照一个方向流动，从发送方到接收方。 message包含以下部分  body object类型，无大小限制，若发送接收两方使用不同的body格式，camel提供了适配器组件  hea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="camel">
+<meta property="og:url" content="https://boranget.github.io/2023/04/22/notes/camel/camel/index.html">
+<meta property="og:site_name" content="Boranget.博客">
+<meta property="og:description" content="一些专业名词EIP: enterprise integration pattern SLA: service-level agreement 服务等级协议 认识CamelCamel的消息模型MESSAGEmessage按照一个方向流动，从发送方到接收方。 message包含以下部分  body object类型，无大小限制，若发送接收两方使用不同的body格式，camel提供了适配器组件  hea">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boranget.github.io/assets/img/tx.png">
+<meta property="article:published_time" content="2023-04-22T02:35:19.000Z">
+<meta property="article:modified_time" content="2023-05-31T02:35:19.000Z">
+<meta property="article:author" content="Boranget">
+<meta property="article:tag" content="camel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boranget.github.io/assets/img/tx.png"><link rel="shortcut icon" href="/assets/img/tx.png"><link rel="canonical" href="https://boranget.github.io/2023/04/22/notes/camel/camel/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'camel',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-31 10:35:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Boranget.博客"><img class="site-icon" src="/assets/img/tx.png"/><span class="site-name">Boranget.博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">camel</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-22T02:35:19.000Z" title="发表于 2023-04-22 10:35:19">2023-04-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-31T02:35:19.000Z" title="更新于 2023-05-31 10:35:19">2023-05-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notes/">notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="camel"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一些专业名词"><a href="#一些专业名词" class="headerlink" title="一些专业名词"></a>一些专业名词</h1><p>EIP: enterprise integration pattern</p>
+<p>SLA: service-level agreement 服务等级协议</p>
+<h1 id="认识Camel"><a href="#认识Camel" class="headerlink" title="认识Camel"></a>认识Camel</h1><h2 id="Camel的消息模型"><a href="#Camel的消息模型" class="headerlink" title="Camel的消息模型"></a>Camel的消息模型</h2><h3 id="MESSAGE"><a href="#MESSAGE" class="headerlink" title="MESSAGE"></a>MESSAGE</h3><p>message按照一个方向流动，从发送方到接收方。</p>
+<p>message包含以下部分</p>
+<ul>
+<li><p>body</p>
+<p>object类型，无大小限制，若发送接收两方使用不同的body格式，camel提供了适配器组件</p>
+</li>
+<li><p>headers</p>
+<p>键值对的形式，存储一些与消息由关的值，比如发送方的标识，或者消息的编码、验证信息等。</p>
+<p>key为大小写不敏感的唯一值，value可以为任意object，且对大小，数量无限制，以map存储</p>
+</li>
+<li><p>attachments</p>
+<p>附件，web service或者email 中使用</p>
+</li>
+</ul>
+<p>每个message都有一个string类型的id标识，其唯一性由消息的创建者保证。</p>
+<p>message也有失败标识“fault flag”，在一些协议中比如soap，错误信息和返回的消息是不同的消息。 但它们都属于合法的响应</p>
+<h3 id="EXCHANGE"><a href="#EXCHANGE" class="headerlink" title="EXCHANGE"></a>EXCHANGE</h3><p>exchange是message在routing过程时的容器</p>
+<p>结构如下</p>
+<p>Exchange</p>
+<ul>
+<li>Exchange ID</li>
+<li>MEP</li>
+<li>Exception</li>
+<li>Properties</li>
+<li>In message<ul>
+<li>Headers</li>
+<li>Attachments</li>
+<li>Body</li>
+</ul>
+</li>
+<li>Out message<ul>
+<li>Headers</li>
+<li>Attachments</li>
+<li>Body</li>
+</ul>
+</li>
+</ul>
+<p>其中：</p>
+<ul>
+<li><p>exchange id</p>
+<p>camel自动生成的exchange唯一标识</p>
+</li>
+<li><p>MEP</p>
+<p>标识是否需要响应，如果该值为<code>inOnly</code></p>
+<p>，则exchange只包含inMesage，如果是<code>inOut</code>，则exchange会包含请求消息和响应消息</p>
+</li>
+<li><p>Exception</p>
+<p>如果在路由过程中出现了error，则异常会存入该字段</p>
+</li>
+<li><p>Properties</p>
+<p>在整个exchange的过程中做数据存取操作，类似于message中的header，但是范围是整个exchange，而header只在消息中有效</p>
+</li>
+<li><p>In message</p>
+<p>Input message, 在一个exchange中肯定会有一个in message，其内容为请求消息</p>
+</li>
+<li><p>Out message</p>
+<p>当MEP为<code>InOut</code>，exchange中会包含out message，其内容为响应消息</p>
+</li>
+</ul>
+<h2 id="Camel的架构"><a href="#Camel的架构" class="headerlink" title="Camel的架构"></a>Camel的架构</h2><p><img src="/2023/04/22/notes/camel/camel/image-20230505171227367.png" alt="image-20230505171227367"></p>
+<h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><ul>
+<li><p>Camel Context</p>
+<p>调控各种服务的运行时系统核心，主要提供如下服务</p>
+<ul>
+<li><p>Components</p>
+<p>包含当前使用的组件</p>
+</li>
+<li><p>Endpoints</p>
+<p>包含当前使用的endpoints</p>
+</li>
+<li><p>Routes</p>
+<p>包含已添加的route</p>
+</li>
+<li><p>Type converters</p>
+<p>包含被加载的type converters</p>
+</li>
+<li><p>Data formats</p>
+<p>包含被加载的data format</p>
+</li>
+<li><p>Registry</p>
+<p>包含一个可以查找bean的注册表</p>
+</li>
+<li><p>Languages</p>
+<p>包含被加载的语言，该语言用作创建表达式，比如Xpath等</p>
+</li>
+</ul>
+</li>
+<li><p>Routing Engine</p>
+<p>消息路由的底层实现，不会暴露给开发者</p>
+</li>
+<li><p>Routes</p>
+<p>路由，可用于cs之间的解耦，功能如下</p>
+<ul>
+<li>动态地决定调用的server</li>
+<li>提供灵活的方式来拓展处理过程</li>
+<li>允许客户端或服务端单独开发</li>
+<li>可连接不同的系统来提供更好的实现</li>
+<li>增强某些系统的特性或功能，比如消息代理和esb</li>
+<li>允许移除服务器的客户端，使用mock来进行测试</li>
+</ul>
+<p>每个camel中的route会有一个id来用于启停，记录日志，调试，监控等。</p>
+<p>一个route只能有一个输入endpoint，如果有多个输入route，camel有提供语法糖：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from(<span class="string">&quot;jms:queue:A&quot;</span>, <span class="string">&quot;jms:queue:B&quot;</span>, <span class="string">&quot;jms:queue:C&quot;</span>).to(<span class="string">&quot;jms:queue:D&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>camel在底层会同时创建三条路由，相当于</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from(<span class="string">&quot;jms:queue:A&quot;</span>).to(<span class="string">&quot;jms:queue:D&quot;</span>);</span><br><span class="line">from(<span class="string">&quot;jms:queue:B&quot;</span>).to(<span class="string">&quot;jms:queue:D&quot;</span>);</span><br><span class="line">from(<span class="string">&quot;jms:queue:C&quot;</span>).to(<span class="string">&quot;jms:queue:D&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>以上在camel中合法但不建议多个input端点。</p>
+</li>
+<li><p>Domain-Specific Language</p>
+<p>camel中使用流式java api来作为dsl，例如</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">from(<span class="string">&quot;file:data/inbox&quot;</span>)</span><br><span class="line">.filter().xpath(<span class="string">&quot;/order[not(@test)]&quot;</span>)</span><br><span class="line">.to(<span class="string">&quot;jms:queue:order&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>或者使用xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">route</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">from</span> <span class="attr">uri</span>=<span class="string">&quot;file:data/inbox&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">xpath</span>&gt;</span>/order[not(@test)]<span class="tag">&lt;/<span class="name">xpath</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">to</span> <span class="attr">uri</span>=<span class="string">&quot;jms:queue:order&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">route</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Processor</p>
+<p>构成路由的节点，负责处理</p>
+</li>
+<li><p>Component</p>
+<p>camel中的主要扩展点，用于扩展功能</p>
+</li>
+<li><p>Endpoint</p>
+<p>信息发送与接收的端点。在camel中，使用uri来配置端点例如</p>
+<p>- file:data&#x2F;inbox? delay&#x3D;5000</p>
+<p>&#x3D; Scheme:Context path?Options</p>
+<p>其中，Scheme表示使用何种component来处理，Context path表示上下文路径，Options表示相关操作。这里：使用FileComponent在data&#x2F;Inbox每五秒进行一次轮询</p>
+</li>
+<li><p>Producer</p>
+<p>能够向端点发送消息的实体</p>
+<p>这里的Producer和Consumer都是相对于外围系统,Producer是生产出消息供外围系统消费, Consumer是消费外围系统产生的消息.</p>
+</li>
+<li><p>Consumer</p>
+<p>能够接收外围系统消息的服务，将消息包装为exchange，camel 中有两种consumer：event-driven consumers 和 polling consumers</p>
+<ul>
+<li><p>event-driven consumers </p>
+<p>监听指定的消息通道，等待客户端向其发送信息，当消息到达，消费者开始执行相关操作，多用于大消息量的异步场景</p>
+</li>
+<li><p>polling consumers</p>
+<p>会主动获取信息, 比如ftp server ,且当前信息未处理完成时不会去获取新的信息, 多用于同步场景, 通常的用法如scheduled的任务。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Routing-with-Camel"><a href="#Routing-with-Camel" class="headerlink" title="Routing with Camel"></a>Routing with Camel</h1><p>routing用于处理来自一个消息队列的消息，并将其发送给一个接收方集合中的某个接收方。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/camel/">camel</a></div><div class="post_share"><div class="social-share" data-image="/assets/img/tx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/22/notes/boobLab%E5%AE%9E%E9%AA%8C/boobLab%E5%AE%9E%E9%AA%8C/" title="boobLab实验"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">boobLab实验</div></div></a></div><div class="next-post pull-right"><a href="/2023/04/22/notes/echarts/echarts/" title="echarts"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">echarts</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Boranget</div><div class="author-info__description">整理的一些笔记和平时的一些经验</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Boranget"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">笔记分类是一些看书或者网课做的笔记，经验分类一般是平时碰到的问题或者折腾的一些小东西。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E4%B8%93%E4%B8%9A%E5%90%8D%E8%AF%8D"><span class="toc-number">1.</span> <span class="toc-text">一些专业名词</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A4%E8%AF%86Camel"><span class="toc-number">2.</span> <span class="toc-text">认识Camel</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Camel%E7%9A%84%E6%B6%88%E6%81%AF%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.1.</span> <span class="toc-text">Camel的消息模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MESSAGE"><span class="toc-number">2.1.1.</span> <span class="toc-text">MESSAGE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#EXCHANGE"><span class="toc-number">2.1.2.</span> <span class="toc-text">EXCHANGE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Camel%E7%9A%84%E6%9E%B6%E6%9E%84"><span class="toc-number">2.2.</span> <span class="toc-text">Camel的架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">2.2.1.</span> <span class="toc-text">概念</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Routing-with-Camel"><span class="toc-number">3.</span> <span class="toc-text">Routing with Camel</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/27/experience/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/" title="windows服务部署jar">windows服务部署jar</a><time datetime="2025-02-27T08:35:19.000Z" title="更新于 2025-02-27 16:35:19">2025-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/" title="大白菜U盘">大白菜U盘</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/" title="联想B300一体机刷BIOS">联想B300一体机刷BIOS</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/notes/Elasticsearch/Elasticsearch/" title="Elasticsearch">Elasticsearch</a><time datetime="2024-12-27T07:35:19.000Z" title="更新于 2024-12-27 15:35:19">2024-12-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/experience/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/" title="浏览器的各种存储">浏览器的各种存储</a><time datetime="2024-12-17T02:35:19.000Z" title="更新于 2024-12-17 10:35:19">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Boranget</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

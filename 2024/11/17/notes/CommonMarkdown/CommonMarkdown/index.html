@@ -1,0 +1,778 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>CommonMarkdown | Boranget.博客</title><meta name="author" content="Boranget"><meta name="copyright" content="Boranget"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="参考资料https:&#x2F;&#x2F;spec.commonmark.org&#x2F;0.31.2&#x2F; 字符和行行&#x2F;空行 line ending：由换行符（U+000A）和回车符（U+000D）组成，如换行不加回车，回车不加换行，以及回车跟着换行 line：0到多个字符（除line ending之外），后面跟着line ending blank line：一个行不包含任何字符或只包含空格（U+0020）或者ta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CommonMarkdown">
+<meta property="og:url" content="https://boranget.github.io/2024/11/17/notes/CommonMarkdown/CommonMarkdown/index.html">
+<meta property="og:site_name" content="Boranget.博客">
+<meta property="og:description" content="参考资料https:&#x2F;&#x2F;spec.commonmark.org&#x2F;0.31.2&#x2F; 字符和行行&#x2F;空行 line ending：由换行符（U+000A）和回车符（U+000D）组成，如换行不加回车，回车不加换行，以及回车跟着换行 line：0到多个字符（除line ending之外），后面跟着line ending blank line：一个行不包含任何字符或只包含空格（U+0020）或者ta">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boranget.github.io/assets/img/tx.png">
+<meta property="article:published_time" content="2024-11-17T13:35:19.000Z">
+<meta property="article:modified_time" content="2024-11-17T13:35:19.000Z">
+<meta property="article:author" content="Boranget">
+<meta property="article:tag" content="markdown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boranget.github.io/assets/img/tx.png"><link rel="shortcut icon" href="/assets/img/tx.png"><link rel="canonical" href="https://boranget.github.io/2024/11/17/notes/CommonMarkdown/CommonMarkdown/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CommonMarkdown',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-17 21:35:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Boranget.博客"><img class="site-icon" src="/assets/img/tx.png"/><span class="site-name">Boranget.博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CommonMarkdown</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-11-17T13:35:19.000Z" title="发表于 2024-11-17 21:35:19">2024-11-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-11-17T13:35:19.000Z" title="更新于 2024-11-17 21:35:19">2024-11-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notes/">notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CommonMarkdown"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://spec.commonmark.org/0.31.2/">https://spec.commonmark.org/0.31.2/</a></p>
+<h1 id="字符和行"><a href="#字符和行" class="headerlink" title="字符和行"></a>字符和行</h1><h2 id="行-x2F-空行"><a href="#行-x2F-空行" class="headerlink" title="行&#x2F;空行"></a>行&#x2F;空行</h2><ul>
+<li>line ending：由换行符（U+000A）和回车符（U+000D）组成，如换行不加回车，回车不加换行，以及回车跟着换行</li>
+<li>line：0到多个字符（除line ending之外），后面跟着line ending</li>
+<li>blank line：一个行不包含任何字符或只包含空格（U+0020）或者tab（U+0009）</li>
+</ul>
+<h2 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h2><ul>
+<li>空格：（U+0020）</li>
+<li>tab：（U+0009）</li>
+<li>ASCII控制字符：a character between <code>U+0000–1F</code> (both including) or <code>U+007F</code>.</li>
+<li>ASCII标点符号：<code>!</code>, <code>&quot;</code>, <code>#</code>, <code>$</code>, <code>%</code>, <code>&amp;</code>, <code>&#39;</code>, <code>(</code>, <code>)</code>, <code>*</code>, <code>+</code>, <code>,</code>, <code>-</code>, <code>.</code>, <code>/</code> (U+0021–2F), <code>:</code>, <code>;</code>, <code>&lt;</code>, <code>=</code>, <code>&gt;</code>, <code>?</code>, <code>@</code> (U+003A–0040), <code>[</code>, <code>\</code>, <code>]</code>, <code>^</code>, <code>_</code>, ` (U+005B–0060), <code>&#123;</code>, <code>|</code>, <code>&#125;</code>, or <code>~</code> (U+007B–007E).</li>
+<li>Unicode标点符号：a character in the Unicode <code>P</code> (puncuation) or <code>S</code> (symbol) general categories.</li>
+<li>Unicode空白字符：a character in the Unicode <code>Zs</code> general category, or a tab (<code>U+0009</code>), line feed (<code>U+000A</code>), form feed (<code>U+000C</code>), or carriage return (<code>U+000D</code>).</li>
+<li>tab的行为可以被理解为四个空格，但作为文本解析时还是tab</li>
+<li>出于安全原因，应将文档中的null（U+0000）替换为替换字符（U+FFFD）</li>
+</ul>
+<h2 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h2><ul>
+<li>任何ascii标点符号应该加上转义斜杠，除此之外的字符之前的转义斜杠应该被解析为文本斜杠。</li>
+<li>被转义的字符应该作为纯文本，不再有md中符号的含义，</li>
+<li>转义斜杠可以被转义斜杠转义，</li>
+<li>行末尾添加一个转义斜杠会作为硬换行，</li>
+<li>转义斜杠在代码块、代码段中、自动链接中或者原生HTML中不起作用</li>
+<li>转义字符在其他内容中比如URL，link title、link reference 、以及围栏代码块的info string中是起作用的</li>
+</ul>
+<h2 id="html实体和字符引用"><a href="#html实体和字符引用" class="headerlink" title="html实体和字符引用"></a>html实体和字符引用</h2><ul>
+<li>合法的实体和字符引用可以在一些地方使用</li>
+<li>实体和字符引用在代码块或者代码段（行内代码）中不被承认</li>
+<li>实体和字符引用如果是不可参与md文档结构解析</li>
+<li>html实体为<code>&amp;</code>+HTML实体名+<code>;</code>：<a target="_blank" rel="noopener" href="https://html.spec.whatwg.org/entities.json">https://html.spec.whatwg.org/entities.json</a></li>
+<li>十进制字符引用：<code>&amp;#</code>+（1-7位的）十进制编码+<code>;</code>，非法的unicode会被替换为替换字符</li>
+<li>十六进制字符引用：<code>&amp;#</code>+<code>X</code>或<code>x</code>+（1-6位的）十六进制编码+<code>;</code></li>
+<li>非法的字符引用会被替换为替换字符，但是非字符引用用原文显示</li>
+<li>在html中，允许实体没有分号结尾，但是在md中不建议进行解析</li>
+<li>不在html实体列表中的字符串不被解析</li>
+<li>实体和字符引用在代码块，代码段中不解析</li>
+<li>注意解析到URL中时会被URL编码</li>
+<li>实体和字符引用解析后的结构符号不会有md符号的作用</li>
+</ul>
+<h1 id="块类型"><a href="#块类型" class="headerlink" title="块类型"></a>块类型</h1><h2 id="叶子块-Leaf-blocks"><a href="#叶子块-Leaf-blocks" class="headerlink" title="叶子块 Leaf blocks"></a>叶子块 Leaf blocks</h2><h3 id="分割线Thematic-breaks"><a href="#分割线Thematic-breaks" class="headerlink" title="分割线Thematic breaks"></a>分割线Thematic breaks</h3><ul>
+<li>开头最多能有三个空格</li>
+<li>至少三个符号<code>-_*</code></li>
+<li>行尾可跟任意数量空格。</li>
+<li>需要使用同意符号，不能混用</li>
+<li>符号中间允许有任意数量空格或者tab分隔。</li>
+<li>行不能有其他符号。</li>
+<li>分割线会结束段落，上下无需空行。</li>
+<li>如果使用中划线，会优先解析为被动标题（setext heading），想避免可以用其他符号。</li>
+</ul>
+<h3 id="标题-ATX-heading"><a href="#标题-ATX-heading" class="headerlink" title="标题 ATX heading"></a>标题 ATX heading</h3><ul>
+<li>开头带1-6个<code>#</code>，可选的任意数量的关闭符号<code>#</code>（pound sign）</li>
+<li>行头<code>#</code>后需要跟至少一个空格或者tab，除非标题为空</li>
+<li>行尾<code>#</code>（如果有）前需要跟至少一个空格或者tab，其后只能跟空格或者tab，如果跟了其他内容则会作为标题内容处理</li>
+<li>被转义的<code>#</code>不作为关闭序列</li>
+<li>行开头允许最多有三个空格</li>
+<li>标题在渲染内联结构之前会先trip空格</li>
+<li>标题层级取决于开头<code>#</code>数量</li>
+<li>标题会结束段落，上下无需空行</li>
+<li>标题可为空</li>
+</ul>
+<h3 id="被动标题-Setext-heading"><a href="#被动标题-Setext-heading" class="headerlink" title="被动标题 Setext heading"></a>被动标题 Setext heading</h3><ul>
+<li>被动标题中不能有空行</li>
+<li>行开头允许最多有三个空格</li>
+<li>下一行为被动标题下划线结构</li>
+<li>该行不能为以下结构：<ul>
+<li>围栏代码块</li>
+<li>标题</li>
+<li>分割线</li>
+<li>列表元素</li>
+<li>html块</li>
+</ul>
+</li>
+<li>被动标题下划线<ul>
+<li>被动标题下划线由<code>=-</code>两种符号组成，长度任意（1-∞）</li>
+<li>行开头允许最多有三个空格</li>
+<li>行结尾可以有任意数量的空格或者tab</li>
+<li><code>=</code>为一级标题，<code>-</code>为二级标题</li>
+</ul>
+</li>
+<li>标题的内容为解析了内联结构后的内容</li>
+<li>一般标题前无需空行，但被动标题不能结束段落，所以当一个被动标题跟在段落后时，需要在段落后先跟一个空行，由于以上原因，被动标题可以有多行。</li>
+<li>被动标题的内容与下划线不需要对齐（三个空格以下的缩进）</li>
+<li>下划线内不能有空格或者tab</li>
+<li>被动标题内容末尾的空格不会导致硬换行，斜杠也不会</li>
+<li>由于块结构优先于内联，所以如果多行的内联代码框住了被动标题的整个结构，会优先解析为被动标题，其余内联结构同理。</li>
+<li>被动标题下划线不能存在于列表或者引用的懒换行中</li>
+<li>被动标题不能为空，否则会变为分割线</li>
+<li>被动标题不能被解析为除段落外的其他块元素，否则被动标题下划线会解析为分割线</li>
+<li>被动标题内容开头如果有特殊符号可以使用转义符转义</li>
+<li>可以通过添加空行的方式避免不必要的被动标题形成</li>
+</ul>
+<h3 id="缩进代码块"><a href="#缩进代码块" class="headerlink" title="缩进代码块"></a>缩进代码块</h3><ul>
+<li>缩进代码块由一个或多个由空行分隔的缩进代码块构成</li>
+<li>一个缩进代码块由一系列非空行组成，每行开头需要有至少四个空格的缩进</li>
+<li>代码块内容为去掉四个缩进空格后的文本原文，包括行尾换行或回车</li>
+<li>缩进代码块没有信息字符串（相对于围栏代码块</li>
+<li>缩进代码块无法结束段落，故在段落后缩进代码块之前必须有一个空行，反过来（缩进代码块后跟段落）不需要。</li>
+<li>当与列表项同时存在时，优先解析为列表项（列表项会有忽略空行续的情况</li>
+<li>只要收尾是由四个空格缩进的结构，则中间所有的空白行都会包括在同一个代码块内</li>
+<li>缩进代码块无法结束段落</li>
+<li>缩进代码块可以直接跟在（无需空行）其他块结构后或前</li>
+<li>任何缩进小于四个空格的非空行都会立即结束代码块，故段落可直接跟在缩进代码块后</li>
+<li>缩进代码块之后或者之前的空行不包括在缩进代码块内</li>
+</ul>
+<h3 id="围栏代码块"><a href="#围栏代码块" class="headerlink" title="围栏代码块"></a>围栏代码块</h3><ul>
+<li>代码围栏由至少三个反引号或者波浪号组成，两种符合不可混用，且需要连续，中间不可穿插空格或者其他符号</li>
+<li>代码围栏最多能有三个空格缩进</li>
+<li>代码围栏后面可以跟info string，info string中不应该跟任何反引号，否则会被解析为行内代码（如果启动符号为波浪线则info string中波浪线和反引号均可以出现）</li>
+<li>围栏代码块直到碰到同样格式（同种字符，相同或者更多数量字符）的代码围栏才会结束</li>
+<li>如果启动代码围栏有N个缩进，则代码内容中每行都会去掉三个空格（不足三个全去掉）</li>
+<li>结束代码围栏最多能有三个缩进（缩进无需与启动代码围栏对齐），其后只能跟空格或者tab并且会被忽略。当然也没有info string一说</li>
+<li>如果到文档结尾（或者引用快结尾、列表项结尾）都没找到结束代码围栏，则启动围栏后所有内容都属于代码块内容</li>
+<li>围栏代码块会结束段落，且前后无需空行</li>
+<li>其余块结构也可以直接跟在围栏代码块前后，无需空行</li>
+<li>代码块内容以原文显示，不进行行内渲染</li>
+<li>info string 中的第一个单词一般作为代码块中语言的声明，通常会在code元素中添加class<code>language-</code>如<code>class=&quot;language-java&quot;</code></li>
+<li>代码块内容可以为空</li>
+</ul>
+<h3 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h3><ul>
+<li><p>HTML块由启动条件和结束条件组成</p>
+</li>
+<li><p>HTML代码块内，所有内容被解析为原生的HTML，包括md结构字符</p>
+</li>
+<li><p>启动条件最多能有三个缩进</p>
+</li>
+<li><p>碰到结束条件关闭该块</p>
+</li>
+<li><p>碰到文档结尾或者行内容器的末尾关闭该块</p>
+</li>
+<li><p>如果碰到其他容器块则关闭该块</p>
+</li>
+<li><p>如果在第一行便碰到了开始条件和结束条件，则块只包含一行</p>
+</li>
+<li><p>七种情况</p>
+<ul>
+<li>情况1<ul>
+<li>启动条件：由 <code>&lt;pre</code>, <code>&lt;script</code>, <code>&lt;style</code>, or <code>&lt;textarea</code> (大小写敏感),开头的行，followed by a space, a tab, the string <code>&gt;</code>, or the end of the line.</li>
+<li>结束条件：行包含end tag <code>&lt;/pre&gt;</code>, <code>&lt;/script&gt;</code>, <code>&lt;/style&gt;</code>, or <code>&lt;/textarea&gt;</code> (大小写敏感，不需要匹配到开始标签)</li>
+</ul>
+</li>
+<li>情况2<ul>
+<li>启动条件：行开头为<code>&lt;!--</code></li>
+<li>结束条件：行包含  <code>--&gt;</code></li>
+</ul>
+</li>
+<li>情况3<ul>
+<li>启动条件：行开头为<code>&lt;?</code></li>
+<li>结束条件：行包含 <code>?&gt;</code></li>
+</ul>
+</li>
+<li>情况4<ul>
+<li>启动条件：行开头为<code> &lt;!</code>后面跟着一个ASCII字符</li>
+<li>结束条件：行包含 <code>?&gt;</code></li>
+</ul>
+</li>
+<li>情况5<ul>
+<li>启动条件：行开头为<code>&lt;![CDATA[</code></li>
+<li>结束条件：行包含 <code>]]&gt;</code></li>
+</ul>
+</li>
+<li>情况6<ul>
+<li>启动条件： 行开头为<code>&lt;</code> or <code>&lt;/</code> followed by one of the strings (大小写敏感) <code>address</code>, <code>article</code>, <code>aside</code>, <code>base</code>, <code>basefont</code>, <code>blockquote</code>, <code>body</code>, <code>caption</code>, <code>center</code>, <code>col</code>, <code>colgroup</code>, <code>dd</code>, <code>details</code>, <code>dialog</code>, <code>dir</code>, <code>div</code>, <code>dl</code>, <code>dt</code>, <code>fieldset</code>, <code>figcaption</code>, <code>figure</code>, <code>footer</code>, <code>form</code>, <code>frame</code>, <code>frameset</code>, <code>h1</code>, <code>h2</code>, <code>h3</code>, <code>h4</code>, <code>h5</code>, <code>h6</code>, <code>head</code>, <code>header</code>, <code>hr</code>, <code>html</code>, <code>iframe</code>, <code>legend</code>, <code>li</code>, <code>link</code>, <code>main</code>, <code>menu</code>, <code>menuitem</code>, <code>nav</code>, <code>noframes</code>, <code>ol</code>, <code>optgroup</code>, <code>option</code>, <code>p</code>, <code>param</code>, <code>search</code>, <code>section</code>, <code>summary</code>, <code>table</code>, <code>tbody</code>, <code>td</code>, <code>tfoot</code>, <code>th</code>, <code>thead</code>, <code>title</code>, <code>tr</code>, <code>track</code>, <code>ul</code>，后面跟着空格或者tab或者行结束，或者  <code>&gt;</code>,  <code>/&gt;</code>.</li>
+<li>结束条件：一个行，后面跟着一个空行</li>
+</ul>
+</li>
+<li>情况7<ul>
+<li>启动条件：行开头为一个完整的HTML开始标签( any <a target="_blank" rel="noopener" href="https://spec.commonmark.org/0.31.2/#tag-name">tag name</a> other than <code>pre</code>, <code>script</code>, <code>style</code>, or <code>textarea</code>)或者一个完整的结束标签，后面跟着0个或多个空格或者tab，再往后为行结尾（end of the line）</li>
+<li>结束条件：一个行，后面跟着一个空行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>HTML块只有在碰到该种类型的结束条件是才会被关闭，所以在其中又碰到开启条件时不会关闭该块或者开启一个新的块</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt;&lt;tr&gt;&lt;td&gt;</span><br><span class="line">&lt;pre&gt;</span><br><span class="line">**Hello**,</span><br><span class="line"></span><br><span class="line">_world_.</span><br><span class="line">&lt;/pre&gt;</span><br><span class="line">&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</span><br><span class="line">//==========</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE document SYSTEM &quot;CommonMark.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;document xmlns=&quot;http://commonmark.org/xml/1.0&quot;&gt;</span><br><span class="line">  &lt;html_block&gt;&amp;lt;table&amp;gt;&amp;lt;tr&amp;gt;&amp;lt;td&amp;gt;</span><br><span class="line">&amp;lt;pre&amp;gt;</span><br><span class="line">**Hello**,&lt;/html_block&gt;</span><br><span class="line">  &lt;paragraph&gt;</span><br><span class="line">    &lt;emph&gt;</span><br><span class="line">      &lt;text&gt;world&lt;/text&gt;</span><br><span class="line">    &lt;/emph&gt;</span><br><span class="line">    &lt;text&gt;.&lt;/text&gt;</span><br><span class="line">    &lt;softbreak /&gt;</span><br><span class="line">    &lt;html_inline&gt;&amp;lt;/pre&amp;gt;&lt;/html_inline&gt;</span><br><span class="line">  &lt;/paragraph&gt;</span><br><span class="line">  &lt;html_block&gt;&amp;lt;/td&amp;gt;&amp;lt;/tr&amp;gt;&amp;lt;/table&amp;gt;&lt;/html_block&gt;</span><br><span class="line">&lt;/document&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>除了情况7外的其他HTML块都会结束段落</p>
+</li>
+<li><p>一个HTML块可以以结束标签开始</p>
+</li>
+<li><p>开放标签也并不需要关闭</p>
+</li>
+<li><p>若标签名在情况6的字符列表中，当碰到该字符串的时候（至少结尾有个分割），则开始条件已经达成，此时已经满足html块的启动条件</p>
+</li>
+<li><p>第一行的标签可以是部分的，只要在应该有空格的地方被分割</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;boranget</span><br><span class="line">name=&quot;&quot;&gt;</span><br><span class="line"></span><br><span class="line">123</span><br><span class="line">//==========</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE document SYSTEM &quot;CommonMark.dtd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;document xmlns=&quot;http://commonmark.org/xml/1.0&quot;&gt;</span><br><span class="line">  &lt;paragraph&gt;</span><br><span class="line">    &lt;html_inline&gt;&amp;lt;boranget</span><br><span class="line">name=&amp;quot;&amp;quot;&amp;gt;&lt;/html_inline&gt;</span><br><span class="line">  &lt;/paragraph&gt;</span><br><span class="line">  &lt;paragraph&gt;</span><br><span class="line">    &lt;text&gt;123&lt;/text&gt;</span><br><span class="line">  &lt;/paragraph&gt;</span><br><span class="line">&lt;/document&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>若标签名在情况6的字符列表中，开放标签并不需要完整包含到<code>&gt;</code>，</p>
+</li>
+<li><p>如果标签名不在6列表中，则第一行中开始标签必须要完整，且该行只能有该启动标签。</p>
+</li>
+<li><p>在情况6中，开始条件不需要单独占用一个行，也可以只是行开头的部分字符。</p>
+</li>
+<li><p>情况6中，任何在没有碰到空行或者文档结尾时的内容都被包括在HTML块中</p>
+</li>
+<li><p>在情况7中，标签名可以为任何字符串，注意是标签名</p>
+</li>
+<li><p>情况7中，如果起始行不只有启动标签，则会解析为inline HTML</p>
+</li>
+<li><p>情况1-5都可以包含空行，因为他们的停止条件是固定的，直到碰到文档结尾或者引用结尾或者列表项结尾</p>
+</li>
+<li><p>结束标签可以和开始标签在同一行</p>
+</li>
+<li><p>在最后一行标签后的内容会包含在HTML块内</p>
+</li>
+<li><p>情况1-6都可以结束段落，故块前无需添加空行，但是对于6，在块结尾需要添加空行。</p>
+</li>
+<li><p>情况7无法结束段落</p>
+</li>
+</ul>
+<h3 id="链接引用定义"><a href="#链接引用定义" class="headerlink" title="链接引用定义"></a>链接引用定义</h3><ul>
+<li><p>链接标签由<code>[</code>开头，以<code>]</code>结尾</p>
+</li>
+<li><p>链接定义有两种情况，</p>
+<ul>
+<li>一种是被尖括号包裹的字符，其中不能保护任何未转义的尖括号，</li>
+<li>另一种是未被尖括号包裹的，其中不能包含ASCII控制字符以及空格，可以包含被转义的圆括号或者成对的圆括号</li>
+</ul>
+</li>
+<li><p>链接标题</p>
+<ul>
+<li>一种是被双引号包裹的字符串，可包含被转义的双引号</li>
+<li>一种是被单引号包裹的字符串，可包含被转义的单引号</li>
+<li>被圆括号包裹，可包含被转义的圆括号</li>
+<li>链接标题可分割多行，但不能包含空行</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo]: /url &quot;title&quot;</span><br><span class="line"></span><br><span class="line">[foo]</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;/url&quot; title=&quot;title&quot;&gt;foo&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>开头最多会存在三个空格的缩进</p>
+</li>
+<li><p>链接引用定义由链接标签开头，跟着一个冒号，接着可选的空格或者tab，或者最多一个行结束，跟着一个链接定义，再跟可选的空格或者tab或者最多一个行结束，在加一个可选的链接标题，如果链接标题存在，则必须添加一个空格或者制表符在链接定义之后。</p>
+</li>
+<li><p>链接引用定义并不会解析出一个结构出来，只是会在链接定义或者图片中引用</p>
+</li>
+<li><p>链接引用定义无法结束段落，故其之前需要一个空行</p>
+</li>
+<li><p>但器可以直接跟在其他的块元素后，不需要空行分割</p>
+</li>
+<li><p>连接引用定义可在引用之前或者之后定义</p>
+</li>
+<li><p>链接定义（第二个组成部分）不能被省略，但可以通过一个空的尖括号区间构建一个空定义</p>
+</li>
+<li><p>title和定义中都可包含转义字符和转义斜杠（如果转义斜杠后非能被转义的字符，则会直接解析为转义斜杠）</p>
+</li>
+<li><p>如果有多个匹配的定义，则会采用第一个定义（先来后到，常量的感觉</p>
+</li>
+<li><p>标签的匹配不区分大小写</p>
+</li>
+<li><p>链接引用定义在标题后不能有除了空格或者tab外的其他字符</p>
+</li>
+<li><p>如果只有链接引用定义而没有链接引用，则链接引用定义不会对文档有影响（不会解析出任何结构</p>
+</li>
+<li><p>如果下一行不满足上一行的连续，则上面的内容单独解析</p>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[foo]: /url</span><br><span class="line">&quot;title&quot; ok</span><br><span class="line">// =======</span><br><span class="line">(上面的解析成引用定义了)</span><br><span class="line">&lt;p&gt;&amp;quot;title&amp;quot; ok&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>多个链接引用定义中间可</p>
+</li>
+<li><p>以无空行分隔</p>
+</li>
+<li><p>在块容器内的链接引用定义会影响整个文档</p>
+</li>
+</ul>
+<h3 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h3><ul>
+<li>由非空行组成</li>
+<li>无法解释为其他块类型</li>
+<li>渲染后为解析了其中的行内元素后的结果</li>
+<li>解析时会删除每行初始和最后的空格或者制表符</li>
+<li>软换行不会终止段落</li>
+<li>一个或多个空行会终止段落，但多个空行并不会渲染为多个空行（一个空行也不会渲染为一个空行</li>
+<li>第一行首的空格不能多于三个，但紧贴着的下面的行首空格没有限制，因为代码块不会终止段落</li>
+</ul>
+<h3 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h3><ul>
+<li>块级元素中间的空行会被忽略，只做隔断用</li>
+<li>在列表中会用来定义紧列表或松列表</li>
+</ul>
+<h2 id="容器块"><a href="#容器块" class="headerlink" title="容器块"></a>容器块</h2><p>容器块中有其他的块作为其内容，有两种基本类型的容器块：块引用和列表项，列表是列表项的元容器。</p>
+<h3 id="块引用"><a href="#块引用" class="headerlink" title="块引用"></a>块引用</h3><ul>
+<li><p>块引用标记最多可以有三个空格缩进</p>
+</li>
+<li><p>块引用标记由字符<code>&gt;</code>，后面跟可选的一个空格缩进组成</p>
+</li>
+<li><p>如果有一系列行Ls组成一系列块Bs，则在Ls每行之前添加一个块引用标记则会组成一个块引用包含Bs</p>
+</li>
+<li><p>如果有一系列行Ls组成了块引用，则删掉一行或多行开始的块引用标记后还是块引用标记，但该些行删掉标记后必须是行持续文本</p>
+<ul>
+<li>块引用标记为<code>&gt;</code>跟一个可选的空格</li>
+<li>行持续文本指的是可以被解析为段落，但并不是段落的开头</li>
+<li>去掉块引用标记后解析为非段落的内容无法续上</li>
+<li>感觉意思就是软换行可以作用在块引用上</li>
+</ul>
+</li>
+<li><p>一个文档无法连续包含两个块引用除非他们中间有空行</p>
+</li>
+<li><p>一个有点反直觉的例子（但其实只要将懒续行理解为软换行就可以</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt; foo</span><br><span class="line">    - bar</span><br><span class="line">// =====</span><br><span class="line">&lt;blockquote&gt;</span><br><span class="line">&lt;p&gt;foo</span><br><span class="line">- bar&lt;/p&gt;</span><br><span class="line">&lt;/blockquote&gt;</span><br><span class="line"></span><br><span class="line">由于以及超过了四个空格缩进，所以无法解析为list，同时因为缩进代码块无法终止段落，所以被续上了</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>引用块可以为空</p>
+</li>
+<li><p>引用块可以有初始或者结尾的空行（但不会被解析为空行，只会认作引用块的开始&#x2F;或末尾</p>
+</li>
+<li><p>空行会分隔一个引用块为两个引用块</p>
+</li>
+<li><p>在一个引用块中包含两个段落的方法是插入一个引用空行</p>
+</li>
+<li><p>引用块会终止段落</p>
+</li>
+<li><p>一般情况下引用块前后无需空行，但由于懒续行的存在，引用块后面可以添加一个空行来切分后面的段落</p>
+</li>
+<li><p>由于懒续行，在引用块的连续行上可省略任意数量的引用标记</p>
+</li>
+<li><p>如果想在引用块中避免懒续行，则使用上面提到的空行</p>
+</li>
+<li><p>当要在引用块中使用缩进代码块时，需要五个空格做缩进，因为引用代码块本身可以包括一个空格的缩进。</p>
+</li>
+</ul>
+<h3 id="列表项"><a href="#列表项" class="headerlink" title="列表项"></a>列表项</h3><ul>
+<li><p>列表标记包括无序列表标记和有序列表标记</p>
+</li>
+<li><p>无序列表标记包括<code>-+*</code></p>
+</li>
+<li><p>有序列表标记为一个长度为1-9的阿拉伯数字（0-9）组成，后面跟着一个<code>.</code>字符或者<code>)</code>字符</p>
+</li>
+<li><p>如果一系列行Ls组成了一系列块Bs，且每行的开头都不是空格或者tab，且M为一个长度为W的列表标记（包括前面的空格和后面的<code>.</code>or<code>)</code>），后面跟着N个空格（1&lt;&#x3D;N&lt;&#x3D;4），则将M作用于Ls的第一行上，且后续的行前都加上W+N个长度的空格，则整体构成了一个列表项，列表项的类型取决于M的类型，且如果是有序列表，则M会作为起始数。</p>
+</li>
+<li><p>当需要将一个列表项包含在段落中时，需要没有空行分隔，且如果是有序列表，则起始数字不能是1，因为起始数字为1的有序列表会结束段落。</p>
+</li>
+<li><p>被动标题不能成为列表项</p>
+</li>
+<li><p>在容器块中定义列表标记起始位置时需要除去容器块部分</p>
+</li>
+<li><p>列表项可能会包含很多的空行，但不会解析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- foo</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  bar</span><br><span class="line">// ===</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;li&gt;</span><br><span class="line">&lt;p&gt;foo&lt;/p&gt;</span><br><span class="line">&lt;p&gt;bar&lt;/p&gt;</span><br><span class="line">&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表项可以包含任意块元素</p>
+</li>
+<li><p>列表项在包含缩进代码块的时候会自然的解析空行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- Foo</span><br><span class="line"></span><br><span class="line">      bar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">      baz</span><br><span class="line">// ======</span><br><span class="line">&lt;ul&gt;</span><br><span class="line">&lt;li&gt;</span><br><span class="line">&lt;p&gt;Foo&lt;/p&gt;</span><br><span class="line">&lt;pre&gt;&lt;code&gt;bar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">baz</span><br><span class="line">&lt;/code&gt;&lt;/pre&gt;</span><br><span class="line">&lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>有序列表的起始数字可以为0，若起始数字为”003”，则会解析为3，但起始数字不能为负数，负数按原文解析</p>
+</li>
+<li><p>如果列表项为缩进代码块开头，则将会认为列表标记后有一个空格是列表标记自带的部分。</p>
+</li>
+<li><p>缩进代码块作为列表项时，额外的缩进会被包含在缩进代码块中</p>
+</li>
+<li><p>列表项中除了代码块外，不超过三个空格的缩进都会去掉</p>
+</li>
+<li><p>如果列表项首行为空行（不管有没有空格），则后面的行需缩进W+1个空格</p>
+</li>
+<li><p>列表项开头只可包含最多一个空行</p>
+</li>
+<li><p>只包含空行的列表项会被解析为空列表项</p>
+</li>
+<li><p>空的列表项无法结束段落</p>
+</li>
+<li><p>如果列表标记之前有1-3个空格缩进，则后续的行理所当然的要加上相同数量的空格缩进，也就是说标记之前的空格缩进也包括在W内</p>
+</li>
+<li><p>懒换行：类似于块引用的懒换行</p>
+</li>
+<li><p>子列表的列表标记在父列表项的缩进范围内</p>
+</li>
+<li><p>子列表可以在列表的第一个块</p>
+</li>
+<li><p>列表项可以包含主动标题&#x2F;被动标题也可以（应该没有什么限制的块元素</p>
+</li>
+</ul>
+<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><ul>
+<li><p>列表由多个相同类型的列表项组成，列表项之间可能会有一个或多个空行</p>
+</li>
+<li><p>相同类型指的是相同类型的列表标记，如果是有序列表，数字后的分隔符也需相同</p>
+</li>
+<li><p>松散列表</p>
+<ul>
+<li>如果存在列表项之间有空行分割</li>
+<li>某个列表项中包含两个或以上的块级元素且有空行作为分割</li>
+<li>代码块内的空行由于不是分隔块级元素的所以不算</li>
+<li>松散列表在解析时，其中的段落会包裹<code>&lt;p&gt;</code>标签</li>
+</ul>
+</li>
+<li><p>不同类型的列表标记会启用一个新的列表</p>
+</li>
+<li><p>列表可以结束段落</p>
+</li>
+<li><p>列表项之间可以存在任意个空行</p>
+</li>
+<li><p>如果想要切分开同样列表标记的列表项为两个列表，或者像在列表后跟缩进代码块，可以插入一个html注释块，注释不会展示，同时也满足结束列表的需求</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- foo</span><br><span class="line">- bar</span><br><span class="line"></span><br><span class="line">&lt;!-- --&gt;</span><br><span class="line"></span><br><span class="line">- baz</span><br><span class="line">- bim</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>只要一个列表项的缩进没有超过上一个列表项（而不是当前级别的第一个列表项，上一个列表项包括当前已有的每一个层级的最后一个列表项）的缩进，则认为他们是同一级的。</p>
+</li>
+<li><p>注意如果解析完成后超过了四个空格，则会被解析为缩进代码块，而缩进代码块无法结束段落，所以如果没有换行，则缩进代码块会被软换行到段落后。</p>
+</li>
+<li><p>松散与紧凑解析后的区别就是每个段落会带个<code>&lt;p&gt;</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">1. a</span><br><span class="line">2. b</span><br><span class="line">3. c</span><br><span class="line">&gt;===</span><br><span class="line">&lt;ol&gt;</span><br><span class="line">&lt;li&gt;a&lt;/li&gt;</span><br><span class="line">&lt;li&gt;b&lt;/li&gt;</span><br><span class="line">&lt;li&gt;c&lt;/li&gt;</span><br><span class="line">&lt;/ol&gt;</span><br><span class="line">&gt;==========&lt;</span><br><span class="line">1. a</span><br><span class="line"></span><br><span class="line">2. b</span><br><span class="line">3. c</span><br><span class="line">&gt;===</span><br><span class="line">&lt;ol&gt;</span><br><span class="line">&lt;li&gt;</span><br><span class="line">&lt;p&gt;a&lt;/p&gt;</span><br><span class="line">&lt;/li&gt;</span><br><span class="line">&lt;li&gt;</span><br><span class="line">&lt;p&gt;b&lt;/p&gt;</span><br><span class="line">&lt;/li&gt;</span><br><span class="line">&lt;li&gt;</span><br><span class="line">&lt;p&gt;c&lt;/p&gt;</span><br><span class="line">&lt;/li&gt;</span><br><span class="line">&lt;/ol&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>父列表为松散&#x2F;紧凑并不影响子列表是松散&#x2F;紧凑</p>
+</li>
+</ul>
+<h1 id="内联类型-x2F-行内元素"><a href="#内联类型-x2F-行内元素" class="headerlink" title="内联类型&#x2F;行内元素"></a>内联类型&#x2F;行内元素</h1><p> 内联元素从左到右依次解析</p>
+<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><ul>
+<li>反引号串由一个或多个未被转义的反引号组成</li>
+<li>代码段由一个反引号串开头，由相同长度的反引号串结尾，中间夹着的就是代码段的内容。</li>
+<li>内容中的行结尾会转换成空格</li>
+<li>代码段不能包含空行</li>
+<li>如果内容的结果字符串开头和结尾都有空格，但是内容不全是空格的话，允许删除首尾的一个空格，这将会允许出现代码段中的开头或者结尾有反引号，但要注意代码中的反引号与作为代码段结构的反引号长度必须有区别，这里只允许空格字符，并不允许其余的空白字符</li>
+<li>如果内容全是空格，则不会进行删除首尾一个空格的操作</li>
+<li>建议使用css<code>code&#123;white-space: pre-wrap;&#125;</code>避免空格被压缩</li>
+<li>转义字符在代码段中不起作用，只会原文显示</li>
+<li>只要首尾的反引号长度不会在内容中出现，则内容中可以出现任意长度的反引号串</li>
+<li>在所有的行内元素中，除了HTML标签和自动链接外，代码段拥有最高的优先权。HTML标签和自动链接和代码段拥有相同的优先权，所以从左到右谁先开先解析谁</li>
+<li>如果代码段没有找到能够匹配的结束反引号串，所有的反引号将以原文解析</li>
+</ul>
+<h2 id="斜体和粗体-x2F-强调和强烈强调"><a href="#斜体和粗体-x2F-强调和强烈强调" class="headerlink" title="斜体和粗体&#x2F;强调和强烈强调"></a>斜体和粗体&#x2F;强调和强烈强调</h2><ul>
+<li><p>分隔符运行：一个机翻的名词，指一个序列，由一个或多个<code>*</code>组成，前面或者后面没有非反斜杠转义的<code>*</code>字符，或者由一个或多个<code>_</code>组成，前面或者后面没有非反斜杠转义的<code>_</code>字符</p>
+</li>
+<li><p>左侧分隔符运行是指一个分隔符运行：</p>
+<ul>
+<li>后面不跟着Unicode空白字符或者Unicode标点符号</li>
+<li>或者后面跟着Unicode标点符号但同时前面有Unicode空白字符或者Unicode标点符号</li>
+<li>以上定义中，行首或者行尾都算作Unicode空白符号</li>
+</ul>
+</li>
+<li><p>右侧分隔符运行是指一个分隔符运行：</p>
+<ul>
+<li>前面没有Unicode空白字符与Unicode标点符号</li>
+<li>或者前面有Unicode标点符号，同时后面有Unicode空白或者Unicode标点符号</li>
+<li>以上定义中，行首或者行尾都算作Unicode空白符号</li>
+</ul>
+</li>
+<li><p>单个<code>*</code>可以开启强调iff它是左侧分隔符运行的一部分</p>
+</li>
+<li><p>单个<code>_</code>可以开启强调iff它是左侧分隔符运行的一部分，而且它要么不是右侧分隔符运行的一部分，要么是前面有Unicode标点符号的右侧分隔符运行的一部分 </p>
+</li>
+<li><p>单个<code>*</code>可以关闭强调iff它是右侧分隔符运行的一部分</p>
+</li>
+<li><p>单个<code>_</code>可以关闭强调iff它是右侧分隔符运行的一部分，而且它要么不是左侧分隔符运行的一部分，要么是后面有Unicode标点符号的左侧分隔符运行的一部分 </p>
+</li>
+<li><p>一个<code>**</code>可以开启强烈强调iff他是左侧分隔符的一部分</p>
+</li>
+<li><p>一个<code>__</code>可以开启强烈强调iff它是左侧分隔符运行的一部分，而且它要么不是右侧分隔符运行的一部分，要么是前面有Unicode标点符号的右侧分隔符运行的一部分 </p>
+</li>
+<li><p>一个<code>**</code>可以关闭强烈强调iff他是右侧分隔符的一部分</p>
+</li>
+<li><p>一个<code>__</code>可以关闭强烈强调iff它是右侧分隔符运行的一部分，而且它要么不是左侧分隔符运行的一部分，要么是后面有Unicode标点符号的左侧分隔符运行的一部分 </p>
+</li>
+<li><p>强调由一个可以开启强调的分隔符开启，由一个可以关闭强调的分隔符关闭。并且必须使用相同的符号<code>*_</code>，而且开启和关闭分隔符必须属于单独的分隔符运行。如果一个分隔符可以同时开启或者关闭强调，则开启和关闭分隔符运行的长度之和不能是三的倍数，除非两个分隔符的长度都是3的倍数</p>
+</li>
+<li><p>强烈强调由一个可以开启强烈强调的分隔符开启，由一个可以关闭强烈强调的分隔符关闭。并且必须使用相同的符号<code>*_</code>，而且开启和关闭分隔符必须属于单独的分隔符运行。如果一个分隔符可以同时开启或者关闭强烈强调，则开启和关闭分隔符运行的长度之和不能是三的倍数，除非两个分隔符的长度都是3的倍数</p>
+</li>
+<li><p>三的倍数例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*foo**bar*</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;&lt;em&gt;foo**bar&lt;/em&gt;&lt;/p&gt;</span><br><span class="line">&gt;=======</span><br><span class="line">***foo** bar*</span><br><span class="line">&gt;==</span><br><span class="line">&lt;p&gt;&lt;em&gt;&lt;strong&gt;foo&lt;/strong&gt; bar&lt;/em&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>一个<code>*</code>不能出现在<code>*</code>分隔符前后，除非它是被转义的</p>
+</li>
+<li><p>一个<code>_</code>不能出现在<code>_</code>分隔符前后，除非它是被转义的</p>
+</li>
+<li><p>不允许交叉，且从左到右第一个出现的优先级高： <code>*foo _bar* baz_</code> is parsed as <code>&lt;em&gt;foo _bar&lt;/em&gt; baz_</code> rather than <code>*foo &lt;em&gt;bar* baz&lt;/em&gt;</code></p>
+</li>
+<li><p>取最短：<code>**foo **bar baz**</code> is parsed as <code>**foo &lt;strong&gt;bar baz&lt;/strong&gt;</code> rather than <code>&lt;strong&gt;foo **bar baz&lt;/strong&gt;</code>，这个例子中，中间的并不满足关闭标签</p>
+</li>
+<li><p>行内代码段，链接，图片，HTML标签优先级高于强调：<code>*[foo*](bar)</code> is parsed as <code>*&lt;a href=&quot;bar&quot;&gt;foo*&lt;/a&gt;</code> rather than as <code>&lt;em&gt;[foo&lt;/em&gt;](bar)</code></p>
+</li>
+<li><p>任何非空的内联元素都可以是强调或者强烈强调的内容</p>
+</li>
+<li><p>允许强调或者强烈强调相互嵌套但不能交叉</p>
+</li>
+<li><p>不允许有无内容的强调或者强烈强调</p>
+</li>
+<li><p>如果有不匹配的分隔符，应将多余的分隔符放在范围外而不是内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">***foo**</span><br><span class="line">&gt;==</span><br><span class="line">&lt;p&gt;*&lt;strong&gt;foo&lt;/strong&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果想直接将强调嵌套在强调内，可以使用不同的符号，强烈强调可直接同符号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">*_foo_*</span><br><span class="line">&gt;==</span><br><span class="line">&lt;p&gt;&lt;em&gt;&lt;em&gt;foo&lt;/em&gt;&lt;/em&gt;&lt;/p&gt;</span><br><span class="line">&gt;====</span><br><span class="line">****foo****</span><br><span class="line"></span><br><span class="line">&lt;p&gt;&lt;strong&gt;&lt;strong&gt;foo&lt;/strong&gt;&lt;/strong&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><pre><code>***foo***
+&gt;==
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;foo&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 链接Links</span><br><span class="line"></span><br><span class="line">- 一个链接包括链接文本，一个链接定义，和一个可选的链接标题</span><br><span class="line">- 在行内链接中，链接定义和链接标题会在链接文本后给出</span><br><span class="line">- 在引用链接中，链接定义和标题会在文档的任意位置给出</span><br><span class="line">- 链接文本</span><br><span class="line">  - 一个链接文本可由零或多个行内元素组成，被方括号包裹</span><br><span class="line">  - 链接不可以包裹其他链接，如果多个合法的链接嵌套，则解析最内部的</span><br><span class="line">  - 链接标题中可包含被转义的方括号或者匹配的方括号</span><br><span class="line">  - 行内代码段、自动链接、HTML标签比链接文本有着更高的优先级</span><br><span class="line">- 链接定义</span><br><span class="line">  - 一个字符序列，包含在尖括号中，其中不能包含行结尾或者未被转义的尖括号</span><br><span class="line">  - 或者一个非空字符序列，不包含ASCII控制符号或者空格，可以包含被转义的或者匹配的圆括号</span><br><span class="line">- 链接标题</span><br><span class="line">  - 标题由双引号包裹，可以包含被转义的双引号</span><br><span class="line">  - 或者由单引号包裹，可以包含被转义的单引号</span><br><span class="line">  - 或者被圆括号包裹，可以包含被转义的圆括号</span><br><span class="line"></span><br><span class="line">- 只有链接文本可以包含多行，但不能包含空行</span><br><span class="line">- 行内链接包含一个链接文本，后面紧随一个左圆括号（中间不能有分隔），一个可选的链接定义和一个可选的链接标题，接着跟随一个右圆括号，这四部分中间可以以空格或者行结束分隔，链接定义和链接标题若都存在，则他们中间必须右空格或者tab或者最多一个行结束，其余的空白字符不被允许。</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  [link](/uri &quot;title&quot;)</span><br><span class="line">  &gt;===</span><br><span class="line">  &lt;p&gt;&lt;a href=&quot;/uri&quot; title=&quot;title&quot;&gt;link&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>以上三部分都可以各自为空</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[]()</span><br><span class="line">&gt;==</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>链接定义只有被包裹时可以包含空格，但其中无论如何不能包含行结束</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[link](/my uri)</span><br><span class="line">&gt;==</span><br><span class="line">&lt;p&gt;[link](/my uri)&lt;/p&gt;</span><br><span class="line">&gt;====</span><br><span class="line">[link](&lt;/my uri&gt;)</span><br><span class="line">&gt;==</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;/my%20uri&quot;&gt;link&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意，在不能别斜杠转义的字符之前添加的斜杠只是单纯的斜杠字符</p>
+</li>
+<li><p>URL转义在链接定义中是被允许的</p>
+</li>
+<li><p>如果省略链接定义而保留title，则title会被转为链接定义</p>
+</li>
+<li><p>在链接标题中，不同的符号互相包裹是可以的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[link](/url &#x27;title &quot;and&quot; title&#x27;)</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;/url&quot; title=&quot;title &amp;quot;and&amp;quot; title&quot;&gt;link&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>链接优先于强调</p>
+</li>
+<li><p>HTML标签，代码段，自动链接优先于链接</p>
+</li>
+</ul>
+<h2 id="引用链接"><a href="#引用链接" class="headerlink" title="引用链接"></a>引用链接</h2><ul>
+<li><p>full：由连接文本后立即跟链接标签左侧的方括号，该标签匹配文档中其他位置的链接引用定义；链接标签由方括号包裹（碰到的第一个右方括号结束），中间必须有至少一个非空字符，为转移的方括号不允许在该范围内，一个链接标签最多包含999个字符。匹配：去掉首位方括号，去掉首位的空格，tab，行结束，将多个连续空格洪竹tab或者行结束转为一个空格，忽略Unicode大小写，如果有多个匹配，则取第一个。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[foo][bar]</span><br><span class="line"></span><br><span class="line">[bar]: /url &quot;title&quot;</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;/url&quot; title=&quot;title&quot;&gt;foo&lt;/a&gt;&lt;/p&gt;</span><br><span class="line">&gt;========匹配的不是解析后的内容</span><br><span class="line">[bar][foo\!]</span><br><span class="line"></span><br><span class="line">[foo!]: /url</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;[bar][foo!]&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+<p>链接文本的规则与行内链接中链接文本的规则相同，包括：可包含转义的或者匹配的方括号，可包含行内元素，其中不可包含其余链接</p>
+<p>链接标签不可包含未转义的方括号</p>
+</li>
+<li><p>collapsed：链接文本即是链接引用定义文本，链接标签内容可省略</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[foo][]</span><br><span class="line"></span><br><span class="line">[foo]: /url &quot;title&quot;</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;/url&quot; title=&quot;title&quot;&gt;foo&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>shortcut：在collapsed的基础上省略链接标签的方括号，其后如果要跟其他元素应该有空格</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[foo]</span><br><span class="line"></span><br><span class="line">[foo]: /url &quot;title&quot;</span><br><span class="line">&gt;===  </span><br><span class="line">&lt;p&gt;&lt;a href=&quot;/url&quot; title=&quot;title&quot;&gt;foo&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>行内link、full和collapsed优先于shortcut</p>
+</li>
+<li><pre><code>// 这里的barbaz解析为了引用链接
+[foo][bar][baz]
+
+[baz]: /url
+&gt;===
+&lt;p&gt;[foo]&lt;a href=&quot;/url&quot;&gt;bar&lt;/a&gt;&lt;/p&gt;
+&gt;=======
+// 但是这个由于bar被定义，所以foobar解析为引用链接
+[foo][bar][baz]
+
+[baz]: /url1
+[bar]: /url2
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## 图片</span><br><span class="line"></span><br><span class="line">- 图片类似于链接，不同点在于图片之前要加一个`!`，组合成`![`</span><br><span class="line"></span><br><span class="line">- 图片的link text为图片描述，且其中可以包含链接或者图片</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+![foo](/url &quot;title&quot;)
+&gt;==
+&lt;p&gt;&lt;img src=&quot;/url&quot; alt=&quot;foo&quot; title=&quot;title&quot; /&gt;&lt;/p&gt;
+&gt;===========
+![foo *bar*]
+
+[foo *bar*]: train.jpg &quot;train &amp; tracks&quot;
+&gt;==
+&lt;p&gt;&lt;img src=&quot;train.jpg&quot; alt=&quot;foo bar&quot; title=&quot;train &amp;amp; tracks&quot; /&gt;&lt;/p&gt;
+&gt;==========
+![foo ![bar](/url)](/url2)
+&gt;==
+&lt;p&gt;&lt;img src=&quot;/url2&quot; alt=&quot;foo bar&quot; /&gt;&lt;/p&gt;
+&gt;==========
+![foo [bar](/url)](/url2)
+&gt;==
+&lt;p&gt;&lt;img src=&quot;/url2&quot; alt=&quot;foo bar&quot; /&gt;&lt;/p&gt;
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 可以看到在如上代码中，图片描述包裹的链接最后只渲染出了链接文本，这是因为图片描述中的内容在渲染为HTML时，只会取纯文本内容，丢弃标签等其他元素，比如强调包裹的文本也是如此。</span><br><span class="line"></span><br><span class="line">## 自动链接</span><br><span class="line"></span><br><span class="line">- 自动链接是被尖括号包裹的绝对路径URI地址或者邮箱地址，他们会被转为链接</span><br><span class="line"></span><br><span class="line">- 尖括号中不能为空</span><br><span class="line"></span><br><span class="line">- 绝对路径URI由协议，后面跟着冒号，再跟零到多个字符（非ASCII控制字符或者空格、尖括号）如果URI包括这些字符，必须使用百分号转义（URL编码）</span><br><span class="line"></span><br><span class="line">- 协议应该是由2-32个字符组成，由ASCII字母开头，后面跟任意的ASCII字母、数字或者符号如`+.-`</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  &lt;http://foo.bar.baz&gt;</span><br><span class="line">  &gt;===</span><br><span class="line">  &lt;p&gt;&lt;a href=&quot;http://foo.bar.baz&quot;&gt;http://foo.bar.baz&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>即使是不真实的协议也可以</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;a+b+c:d&gt;</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;a+b+c:d&quot;&gt;a+b+c:d&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>斜杠转义在自动链接中不起作用</p>
+</li>
+<li><p>邮箱正则：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/^[a-zA-Z0-9.!#$%&amp;&#x27;*+/=?^_`&#123;|&#125;~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]&#123;0,61&#125;[a-zA-Z0-9])?</span><br><span class="line">(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]&#123;0,61&#125;[a-zA-Z0-9])?)*$/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>邮箱：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;foo@bar.example.com&gt;</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;&lt;a href=&quot;mailto:foo@bar.example.com&quot;&gt;foo@bar.example.com&lt;/a&gt;&lt;/p&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="RAW-HTML"><a href="#RAW-HTML" class="headerlink" title="RAW HTML"></a>RAW HTML</h2><p>被尖括号包裹并且看着像HTML标签的文本，会被解析为原生HTML 标签</p>
+<ul>
+<li><p>一个标签名由ASCII字母开头，后面跟0-n字母数字或者中划线</p>
+</li>
+<li><p>一个属性包括空格tab或者最多一个行结束，一个属性名和一个可选的属性值定义</p>
+</li>
+<li><p>一个属性名由ASCII字母、下划线或者<code>:</code>开头，后面跟着0-n个ASCII字母、数字、下划线、<code>.:-</code></p>
+</li>
+<li><p>属性值定义由可选的空格tab或者最多一个行结束，一个等于号，可选的空格tab或者最多一个行结束，和属性值组成</p>
+</li>
+<li><p>属性值可以被单引号或者双引号包裹，也可以没有包裹</p>
+</li>
+<li><p>没有包裹的属性值不可以包含空格、tab、行结束、<code>&quot;&#39;=&lt;&gt;</code>，以及反引号</p>
+</li>
+<li><p>单引号包裹的属性值不能包括单引号，双引号包裹的属性值不能包括双引号</p>
+</li>
+<li><p>启动标签由左尖括号开头，跟tag name，0-n个属性，可选的空格，tab或者最多一个行结束，一个可选的斜杠，以及右尖括号</p>
+</li>
+<li><p>结束标签由<code>&lt;/</code>开头，后跟标签名，可选的空格，tab或者最多一个行结束，一个右尖括号。</p>
+</li>
+<li><p>HTML注释： <code>&lt;!--&gt;</code>, <code>&lt;!---&gt;</code>, or <code>&lt;!--</code>, a string of characters not including the string <code>--&gt;</code>, and <code>--&gt;</code> </p>
+</li>
+<li><p>PI：由<code>&lt;?</code>开头，中间包裹内容，<code>?&gt;</code>结尾</p>
+</li>
+<li><p>声明由<code>&lt;!</code>开头<code>&gt;</code>结尾</p>
+</li>
+<li><p>CDATA由<code>&lt;![CDATA[</code>开头，<code>]]&gt;</code>结尾</p>
+</li>
+<li><p>HTML标签有开始标签、结束标签、HTML注释、PI、声明和CDATA</p>
+</li>
+<li><p>转义斜杠在HTML属性中不起作用</p>
+</li>
+<li><p>实体引用或者数字字符会被保留在HTML属性中</p>
+</li>
+</ul>
+<h2 id="硬换行"><a href="#硬换行" class="headerlink" title="硬换行"></a>硬换行</h2><ul>
+<li>不在块结束的末尾的两个以上的空格再加一个行结束会组成硬换行</li>
+<li>硬换行会被渲染为<code>&lt;br/&gt;</code></li>
+<li>转移斜杠可以代替硬换行中的行尾空格</li>
+<li>硬换行的下一行开头的空格会被忽略</li>
+<li>硬换行会出现在emphasis, links, and other constructs that allow inline content</li>
+<li>硬换行不会出现在代码段中或者HTML标签中</li>
+<li>硬换行被用于切开块中的行内内容，块结束不会有</li>
+</ul>
+<h2 id="软换行"><a href="#软换行" class="headerlink" title="软换行"></a>软换行</h2><ul>
+<li>没有在两个空格后的行结束会被解析为软换行</li>
+<li>软换行解析为HTML会转为空格或者行结束，在浏览器中的表现形式都是一样的</li>
+<li>渲染器可以提供选项将软换行渲染为硬换行</li>
+</ul>
+<h2 id="文本内容"><a href="#文本内容" class="headerlink" title="文本内容"></a>文本内容</h2><p>没有被其他规则匹配的内容会被解析为纯文本，纯文本中的空格直接渲染到HTML中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Multiple     spaces</span><br><span class="line">&gt;===</span><br><span class="line">&lt;p&gt;Multiple     spaces&lt;/p&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/markdown/">markdown</a></div><div class="post_share"><div class="social-share" data-image="/assets/img/tx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/11/17/notes/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="Alhagi实现记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Alhagi实现记录</div></div></a></div><div class="next-post pull-right"><a href="/2024/10/11/experience/sftp%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8A%E8%BF%9E%E6%8E%A5/sftp%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA%E4%BB%A5%E5%8F%8A%E8%BF%9E%E6%8E%A5/" title="sftp服务搭建以及连接"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">sftp服务搭建以及连接</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/11/17/notes/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="Alhagi实现记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-17</div><div class="title">Alhagi实现记录</div></div></a></div><div><a href="/2024/08/06/notes/markdown%E8%A7%84%E8%8C%83%E6%95%99%E7%A8%8B/markdown%E8%A7%84%E8%8C%83%E6%95%99%E7%A8%8B/" title="markdown规范教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">markdown规范教程</div></div></a></div><div><a href="/2024/08/06/notes/md%E7%BC%96%E8%BE%91%E5%99%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/md%E7%BC%96%E8%BE%91%E5%99%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/" title="md编辑器相关技术记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">md编辑器相关技术记录</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Boranget</div><div class="author-info__description">整理的一些笔记和平时的一些经验</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Boranget"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">笔记分类是一些看书或者网课做的笔记，经验分类一般是平时碰到的问题或者折腾的一些小东西。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E5%92%8C%E8%A1%8C"><span class="toc-number">2.</span> <span class="toc-text">字符和行</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%8C-x2F-%E7%A9%BA%E8%A1%8C"><span class="toc-number">2.1.</span> <span class="toc-text">行&#x2F;空行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="toc-number">2.2.</span> <span class="toc-text">特殊字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6"><span class="toc-number">2.3.</span> <span class="toc-text">转义字符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#html%E5%AE%9E%E4%BD%93%E5%92%8C%E5%AD%97%E7%AC%A6%E5%BC%95%E7%94%A8"><span class="toc-number">2.4.</span> <span class="toc-text">html实体和字符引用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9D%97%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">块类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B6%E5%AD%90%E5%9D%97-Leaf-blocks"><span class="toc-number">3.1.</span> <span class="toc-text">叶子块 Leaf blocks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%89%B2%E7%BA%BFThematic-breaks"><span class="toc-number">3.1.1.</span> <span class="toc-text">分割线Thematic breaks</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E9%A2%98-ATX-heading"><span class="toc-number">3.1.2.</span> <span class="toc-text">标题 ATX heading</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A2%AB%E5%8A%A8%E6%A0%87%E9%A2%98-Setext-heading"><span class="toc-number">3.1.3.</span> <span class="toc-text">被动标题 Setext heading</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%A9%E8%BF%9B%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-number">3.1.4.</span> <span class="toc-text">缩进代码块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%B4%E6%A0%8F%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-number">3.1.5.</span> <span class="toc-text">围栏代码块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML"><span class="toc-number">3.1.6.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E5%BC%95%E7%94%A8%E5%AE%9A%E4%B9%89"><span class="toc-number">3.1.7.</span> <span class="toc-text">链接引用定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E8%90%BD"><span class="toc-number">3.1.8.</span> <span class="toc-text">段落</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E8%A1%8C"><span class="toc-number">3.1.9.</span> <span class="toc-text">空行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%B9%E5%99%A8%E5%9D%97"><span class="toc-number">3.2.</span> <span class="toc-text">容器块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%97%E5%BC%95%E7%94%A8"><span class="toc-number">3.2.1.</span> <span class="toc-text">块引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E9%A1%B9"><span class="toc-number">3.2.2.</span> <span class="toc-text">列表项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8"><span class="toc-number">3.2.3.</span> <span class="toc-text">列表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E8%81%94%E7%B1%BB%E5%9E%8B-x2F-%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0"><span class="toc-number">4.</span> <span class="toc-text">内联类型&#x2F;行内元素</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="toc-number">4.1.</span> <span class="toc-text">代码段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%9C%E4%BD%93%E5%92%8C%E7%B2%97%E4%BD%93-x2F-%E5%BC%BA%E8%B0%83%E5%92%8C%E5%BC%BA%E7%83%88%E5%BC%BA%E8%B0%83"><span class="toc-number">4.2.</span> <span class="toc-text">斜体和粗体&#x2F;强调和强烈强调</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E9%93%BE%E6%8E%A5"><span class="toc-number">4.3.</span> <span class="toc-text">引用链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAW-HTML"><span class="toc-number">4.4.</span> <span class="toc-text">RAW HTML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E6%8D%A2%E8%A1%8C"><span class="toc-number">4.5.</span> <span class="toc-text">硬换行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E6%8D%A2%E8%A1%8C"><span class="toc-number">4.6.</span> <span class="toc-text">软换行</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E5%86%85%E5%AE%B9"><span class="toc-number">4.7.</span> <span class="toc-text">文本内容</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/27/experience/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/" title="windows服务部署jar">windows服务部署jar</a><time datetime="2025-02-27T08:35:19.000Z" title="更新于 2025-02-27 16:35:19">2025-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/" title="大白菜U盘">大白菜U盘</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/" title="联想B300一体机刷BIOS">联想B300一体机刷BIOS</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/notes/Elasticsearch/Elasticsearch/" title="Elasticsearch">Elasticsearch</a><time datetime="2024-12-27T07:35:19.000Z" title="更新于 2024-12-27 15:35:19">2024-12-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/experience/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/" title="浏览器的各种存储">浏览器的各种存储</a><time datetime="2024-12-17T02:35:19.000Z" title="更新于 2024-12-17 10:35:19">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Boranget</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

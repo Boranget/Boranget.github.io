@@ -1,0 +1,263 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Redis | Boranget.博客</title><meta name="author" content="Boranget"><meta name="copyright" content="Boranget"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="windows下载地址https:&#x2F;&#x2F;github.com&#x2F;microsoftarchive&#x2F;redis&#x2F;releases&#x2F;download&#x2F;win-3.0.504&#x2F;Redis-x64-3.0.504.msi 安装后redis服务默认会启动 SDSsimple dynamic string SDS是redis底层使用的字符串结构 123456789struct sdshdr &amp;#123;    &#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis">
+<meta property="og:url" content="https://boranget.github.io/2022/12/29/notes/Redis/redis/index.html">
+<meta property="og:site_name" content="Boranget.博客">
+<meta property="og:description" content="windows下载地址https:&#x2F;&#x2F;github.com&#x2F;microsoftarchive&#x2F;redis&#x2F;releases&#x2F;download&#x2F;win-3.0.504&#x2F;Redis-x64-3.0.504.msi 安装后redis服务默认会启动 SDSsimple dynamic string SDS是redis底层使用的字符串结构 123456789struct sdshdr &amp;#123;    &#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boranget.github.io/assets/img/tx.png">
+<meta property="article:published_time" content="2022-12-29T08:50:30.000Z">
+<meta property="article:modified_time" content="2024-01-29T08:40:19.000Z">
+<meta property="article:author" content="Boranget">
+<meta property="article:tag" content="redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boranget.github.io/assets/img/tx.png"><link rel="shortcut icon" href="/assets/img/tx.png"><link rel="canonical" href="https://boranget.github.io/2022/12/29/notes/Redis/redis/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Redis',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-29 16:40:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Boranget.博客"><img class="site-icon" src="/assets/img/tx.png"/><span class="site-name">Boranget.博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Redis</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-29T08:50:30.000Z" title="发表于 2022-12-29 16:50:30">2022-12-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-29T08:40:19.000Z" title="更新于 2024-01-29 16:40:19">2024-01-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notes/">notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Redis"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="windows下载地址"><a href="#windows下载地址" class="headerlink" title="windows下载地址"></a>windows下载地址</h1><p><a target="_blank" rel="noopener" href="https://github.com/microsoftarchive/redis/releases/download/win-3.0.504/Redis-x64-3.0.504.msi">https://github.com/microsoftarchive/redis/releases/download/win-3.0.504/Redis-x64-3.0.504.msi</a></p>
+<p>安装后redis服务默认会启动</p>
+<h1 id="SDS"><a href="#SDS" class="headerlink" title="SDS"></a>SDS</h1><p><strong>simple dynamic string</strong></p>
+<p>SDS是redis底层使用的字符串结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sdshdr</span> &#123;</span></span><br><span class="line">    <span class="comment">//记录buf数组中已使用字节的数量</span></span><br><span class="line">    <span class="comment">//等于SDS所保存字符串的长度</span></span><br><span class="line">    <span class="type">int</span> len;</span><br><span class="line">    <span class="comment">//记录buf数组中未使用字节的数量</span></span><br><span class="line">    <span class="type">int</span> <span class="built_in">free</span>;</span><br><span class="line">    <span class="comment">//字节数组，用于保存字符串</span></span><br><span class="line">    <span class="type">char</span> buf[];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>保留了<code>\0</code>字符，目的是为了复用c语言中的字符串方法</p>
+<p>buf.length &#x3D; len + 1 + free</p>
+<p>其中free为每次分配空间进行的预分配内存，避免每次扩展字符串时都需要重新申请空间。以1M为限，1M下会分配即将用到的内存的两倍，1M以上只多分配1M，避免指数爆炸。当然如果free本身就能够支持本次操作，则不会进行内存重分配。</p>
+<p>free空间为惰性释放，当对字符串进行缩短操作时，会将回收的内存放在free中而不是会立即释放，便于后续使用，同时SDS提供了对应的释放api避免造成内存浪费。</p>
+<p>此外，SDS为二进制安全的，由于不会通过终止符判断是否到信息结尾，故可以存储二进制数据即使其中包含<code>\0</code>，保证数据在存储与读取时的一致性</p>
+<h1 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> &#123;</span></span><br><span class="line">    <span class="comment">// 前置节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> * <span class="title">prev</span>;</span></span><br><span class="line">    <span class="comment">// 后置节点</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">listNode</span> * <span class="title">next</span>;</span></span><br><span class="line">    <span class="comment">//节点的值</span></span><br><span class="line">    <span class="type">void</span> * value;</span><br><span class="line">&#125;listNode;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">list</span> &#123;</span></span><br><span class="line">    <span class="comment">// 表头节点</span></span><br><span class="line">    listNode * head;</span><br><span class="line">    <span class="comment">// 表尾节点</span></span><br><span class="line">    listNode * tail;</span><br><span class="line">    <span class="comment">// 链表所包含的节点数量</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> len;</span><br><span class="line">    <span class="comment">// 节点值复制函数</span></span><br><span class="line">    <span class="type">void</span> *(*dup)(<span class="type">void</span> *ptr);</span><br><span class="line">    <span class="comment">// 节点值释放函数</span></span><br><span class="line">    <span class="type">void</span> (*<span class="built_in">free</span>)(<span class="type">void</span> *ptr);</span><br><span class="line">    <span class="comment">// 节点值对比函数</span></span><br><span class="line">    <span class="type">int</span> (*match)(<span class="type">void</span> *ptr,<span class="type">void</span> *key);</span><br><span class="line">&#125; <span class="built_in">list</span>;</span><br></pre></td></tr></table></figure>
+
+<p>双向无环链表，带头指针和尾指针，且带链表长度，同时结点的值为void指针类型，故具有多态性。</p>
+<h1 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h1><h1 id="RedisTemplate"><a href="#RedisTemplate" class="headerlink" title="RedisTemplate"></a>RedisTemplate</h1><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>spring默认提供的redisTemplate并不好用，这里使用自定义的RedisTemplate&lt;String, Object&gt;</p>
+<h3 id="redis连接"><a href="#redis连接" class="headerlink" title="redis连接"></a>redis连接</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">0</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">6379</span></span><br><span class="line">    <span class="attr">connect-timeout:</span> <span class="number">1000</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="redis配置"><a href="#redis配置" class="headerlink" title="redis配置"></a>redis配置</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里的Configuration是为了使下面的@Bean生效</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RedisConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean(name = &quot;myTemplate&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> RedisTemplate&lt;String,Object&gt; <span class="title function_">template</span><span class="params">(RedisConnectionFactory factory)</span>&#123;</span><br><span class="line">        <span class="comment">// 要返回的对象初始化</span></span><br><span class="line">        RedisTemplate&lt;String ,Object&gt; template = <span class="keyword">new</span> <span class="title class_">RedisTemplate</span>&lt;&gt;();</span><br><span class="line">        <span class="comment">// 设置工厂,这里的工厂对象spring会自动注入</span></span><br><span class="line">        template.setConnectionFactory(factory);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 从这里开始是json序列化器的配置</span></span><br><span class="line">        Jackson2JsonRedisSerializer&lt;Object&gt; jackson2JsonRedisSerializer</span><br><span class="line">                = <span class="keyword">new</span> <span class="title class_">Jackson2JsonRedisSerializer</span>&lt;Object&gt;(Object.class);</span><br><span class="line">        <span class="type">ObjectMapper</span> <span class="variable">om</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line">        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">        <span class="comment">// 以下两条为指定序列化内容</span></span><br><span class="line">        <span class="comment">// 已过期方法</span></span><br><span class="line">        <span class="comment">// 这里必须指定,否则反向序列化结果是map</span></span><br><span class="line"><span class="comment">//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span></span><br><span class="line">        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance,ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">        <span class="comment">// 序列化器设置om</span></span><br><span class="line">        jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">        <span class="comment">// 初始化一个字符串的序列化器</span></span><br><span class="line">        <span class="type">StringRedisSerializer</span> <span class="variable">stringRedisSerializer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringRedisSerializer</span>();</span><br><span class="line">        template.setKeySerializer(stringRedisSerializer);</span><br><span class="line">        template.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        template.setHashKeySerializer(stringRedisSerializer);</span><br><span class="line">        template.setHashValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        template.afterPropertiesSet();</span><br><span class="line">        <span class="keyword">return</span> template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="调用"><a href="#调用" class="headerlink" title="调用"></a>调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Autowired</span></span><br><span class="line">    RedisTemplate&lt;String,Object&gt; myTemplate;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@GetMapping(&quot;/factory&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">factoryInfo</span><span class="params">()</span> <span class="keyword">throws</span> JsonProcessingException &#123;</span><br><span class="line">        ValueOperations&lt;String, Object&gt; stringObjectValueOperations = myTemplate.opsForValue();</span><br><span class="line"></span><br><span class="line">        <span class="type">Student</span> <span class="variable">student</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line">        student.setName(<span class="string">&quot;掌上&quot;</span>);</span><br><span class="line">        student.setAge(<span class="number">18</span>);</span><br><span class="line">        student.setGender(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        student.setStudentNum(<span class="string">&quot;201806010145&quot;</span>);</span><br><span class="line">        stringObjectValueOperations.set(<span class="string">&quot;ms&quot;</span>,student);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">value</span> <span class="operator">=</span> stringObjectValueOperations.get(<span class="string">&quot;ms&quot;</span>);</span><br><span class="line">        System.out.println(value);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="EnableRedisRepositories"><a href="#EnableRedisRepositories" class="headerlink" title="EnableRedisRepositories"></a>EnableRedisRepositories</h1><h2 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h2><h3 id="实体类配置"><a href="#实体类配置" class="headerlink" title="实体类配置"></a>实体类配置</h3><p>指定实体类中的id,并将实体类加@RedisHash(“student”)的注解,将会以student:id为key的方式存入redis</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RedisHash(&quot;student&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    Long id;</span><br><span class="line">    String name;</span><br><span class="line">    Integer age;</span><br><span class="line">    String gender;</span><br><span class="line">    String studentNum;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Dao与Service"><a href="#Dao与Service" class="headerlink" title="Dao与Service"></a>Dao与Service</h3><p><strong>Dao</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">StudentDao</span> <span class="keyword">extends</span> <span class="title class_">CrudRepository</span>&lt;Student, Long&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>泛型中第一位为存储类型,第二位为id的类型</p>
+<p><strong>Service</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StudentService</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> StudentDao studentDao;</span><br><span class="line"></span><br><span class="line"><span class="comment">//因为使用了RedisRepositories，所以简单的crud将不用使用RedisTemplate</span></span><br><span class="line"><span class="comment">//    @Autowired</span></span><br><span class="line"><span class="comment">//    private RedisTemplate redisTemplate;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 按student:id的方式存入redis</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> student</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">save</span><span class="params">(Student student)</span>&#123;</span><br><span class="line">        <span class="comment">//redisTemplate.opsForValue().set(new Random().nextDouble() + &quot;&quot;,student);</span></span><br><span class="line"></span><br><span class="line">        studentDao.save(student);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据key从redis中查找对应value</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> Student <span class="title function_">findOne</span><span class="params">(Long id)</span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//StudentEntity student = (StudentEntity) redisTemplate.opsForValue().get(key);</span></span><br><span class="line"></span><br><span class="line">        <span class="type">Student</span> <span class="variable">student</span> <span class="operator">=</span> studentDao.findById(id).get();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> student;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="调用-1"><a href="#调用-1" class="headerlink" title="调用"></a>调用</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line">    StudentService studentService;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/rep/student/&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">saveAndGetStudentByRep</span><span class="params">(<span class="meta">@PathVariable</span> Long id)</span> <span class="keyword">throws</span> JsonProcessingException &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">Student</span> <span class="variable">student</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line">        student.setName(<span class="string">&quot;掌上&quot;</span>);</span><br><span class="line">        student.setAge(<span class="number">18</span>);</span><br><span class="line">        student.setGender(<span class="string">&quot;男&quot;</span>);</span><br><span class="line">        student.setStudentNum(LocalDateTime.now().toString());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        studentService.save(student);</span><br><span class="line">        <span class="type">Student</span> <span class="variable">value</span> <span class="operator">=</span> studentService.findOne(id);</span><br><span class="line">        System.out.println(value);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="保护模式"><a href="#保护模式" class="headerlink" title="保护模式"></a>保护模式</h1><p>redis默认开启保护模式。要是配置里没有指定bind和密码，开启该参数后，redis只能本地访问，拒绝外部访问。</p>
+<p>redis.conf安全设置： # 打开保护模式 protected-mode yes</p>
+<p>Redis 的保护模式是一种安全特性，它限制了 Redis 服务器的访问权限。当保护模式被启用时，如果没有设置 <code>bind</code> 参数和密码，Redis 服务器将只接受来自本地主机的连接。这意味着，外部客户端将无法连接到 Redis 服务器，除非它们在同一个局域网内或具有相应的权限。</p>
+<p>具体来说：</p>
+<ol>
+<li><strong>bind 参数</strong>：<code>bind</code> 参数用于指定 Redis 服务器应该绑定的 IP 地址。如果未设置此参数，Redis 将绑定到所有可用的网络接口。但当保护模式被启用时，如果未设置 <code>bind</code> 参数，Redis 将只接受来自 localhost（127.0.0.1）的连接。</li>
+<li><strong>密码</strong>：为了从外部访问 Redis，你可以设置密码。当保护模式被启用时，如果你没有设置密码，外部客户端将无法连接到 Redis 服务器，除非它们具有适当的权限或位于相同的局域网内。</li>
+</ol>
+<p>因此，当 Redis 的保护模式被启用且没有设置 <code>bind</code> 和密码时，Redis 服务器的访问将被限制在本地机器上。这有助于增强服务器的安全性，防止未经授权的访问。</p>
+<h1 id="禁用或者重命名危险命令"><a href="#禁用或者重命名危险命令" class="headerlink" title="禁用或者重命名危险命令"></a>禁用或者重命名危险命令</h1><p>Redis中线上使用keys *命令是非常危险的，应该禁用或者限制使用这些危险的命令，可降低Redis写入文件漏洞的入侵风险。</p>
+<ul>
+<li><code>KEYS *</code> 命令在 Redis 中用于列出所有的键。当 Redis 服务器正在处理这个命令时，它会遍历整个键空间，这可能会导致长时间的阻塞，尤其是在有大量数据的情况下。</li>
+<li>更糟糕的是，如果有外部攻击者恶意地使用 <code>KEYS *</code> 命令，它可能会导致 Redis 服务器资源耗尽，从而拒绝服务。</li>
+</ul>
+<p>修改 redis.conf 文件，添加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">rename-command FLUSHALL &quot;&quot;</span><br><span class="line">rename-command FLUSHDB  &quot;&quot;</span><br><span class="line">rename-command CONFIG   &quot;&quot;</span><br><span class="line">rename-command KEYS     &quot;&quot;</span><br><span class="line">rename-command SHUTDOWN &quot;&quot;</span><br><span class="line">rename-command DEL &quot;&quot;</span><br><span class="line">rename-command EVAL &quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>然后重启redis。<br>重命名为”” 代表禁用命令，如想保留命令，可以重命名为不可猜测的字符串，如：<br><code>rename-command FLUSHALL  joYAPNXRPmcarcR4ZDgC</code></p>
+<h1 id="启用远程连接"><a href="#启用远程连接" class="headerlink" title="启用远程连接"></a>启用远程连接</h1><p>修改redis.conf文件，linux在&#x2F;etc&#x2F;redis下</p>
+<ul>
+<li>修改protcted-mode为false</li>
+<li>将bind一行注释</li>
+<li>requirepass 后面设置密码</li>
+</ul>
+<h1 id="启用密码后的cli连接"><a href="#启用密码后的cli连接" class="headerlink" title="启用密码后的cli连接"></a>启用密码后的cli连接</h1><p>redis-cli之后，需要使用 auth password 进行认证，否则无权限操作</p>
+<p>远程：redis-cli -h host -p port -a password</p>
+<h1 id="Hash过期"><a href="#Hash过期" class="headerlink" title="Hash过期"></a>Hash过期</h1><p>hash类型数据无法为单独的每条数据设置过期时间，只能为整个hash结构设置过期时间，如果有需求，建议在单个字段中存储过期时间手动判断</p>
+<h1 id="日志记录"><a href="#日志记录" class="headerlink" title="日志记录"></a>日志记录</h1><p>linux下<code>redisc.onf</code>文件在etc的redis下面，编辑该文件，找到logfile一行，改行为日志文件所在地址</p>
+<h1 id="redis被攻击记录"><a href="#redis被攻击记录" class="headerlink" title="redis被攻击记录"></a>redis被攻击记录</h1><p>redis关掉了保护模式与bind，密码设为了123456</p>
+<p>现象，redis在备份rdb文件时出错，显示日志如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">* 1 changes in 900 seconds. Saving...</span><br><span class="line">* Background saving started by pid 2127220</span><br><span class="line">* DB saved on disk</span><br><span class="line">* RDB: 0 MB of memory used by copy-on-write</span><br><span class="line">* Background saving terminated with success</span><br><span class="line">// 备份文件夹只读</span><br><span class="line"># Failed opening the RDB file root (in server root dir /var/spool/cron) for saving: Read-only file system</span><br><span class="line"># Failed opening the RDB file redis (in server root dir /var/spool/cron) for saving: Read-only file system</span><br><span class="line">// 不知道哪里来的MASTERR</span><br><span class="line">* Connecting to MASTER 108.181.122.221:60101</span><br><span class="line">* MASTER &lt;-&gt; REPLICA sync started</span><br><span class="line">* Non blocking connect for SYNC fired the event.</span><br><span class="line">* Master replied to PING, replication can continue...</span><br><span class="line">* Trying a partial resynchronization (request ccc31f7f854cd2e74e324a89c50f5e9d244d31e5:1).</span><br><span class="line">* Full resync from master: ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ:0</span><br><span class="line">* Discarding previously cached master state.</span><br><span class="line">* MASTER &lt;-&gt; REPLICA sync: receiving 21816 bytes from master</span><br></pre></td></tr></table></figure>
+
+<p>其中奇怪的地方，一个是出现了一个主机，另一个是备份文件夹变成了只读</p>
+<p>首先没有配置过主从复制，其次查看配置文件中，备份文件夹的地址为 <code>/var/lib/redis</code>，可见配置被动态修改了</p>
+<p>参考攻击方法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/q20010619/article/details/121912003">Redis攻防(未授权访问、利用redis写入webshell、任务计划反弹、Shellssh-keygen 公钥登录服务器、利用主从复制RCE)_redis未授权访问写入webshell的步骤不包括?(1.00分) 设置数据缓存文件 设置数据缓-CSDN博客</a></p>
+<p>建议配置方式</p>
+<ol>
+<li>单独为redis设置一个普通账号启动 redis</li>
+<li>设置本地 localhost 不允许外部访问</li>
+<li>保护模式开启 protected-mode 开启 （默认开启）</li>
+<li>把端口最好更改</li>
+<li>requirepass 设置redis密码</li>
+</ol>
+<p>好在使用apt安装的redis，且使用systemctl启动redis，这样redis的所属用户为redis，没有系统文件夹比如进程等的操作权限</p>
+<h1 id="systemctl启动redis的配置"><a href="#systemctl启动redis的配置" class="headerlink" title="systemctl启动redis的配置"></a>systemctl启动redis的配置</h1><p>使用<code>systemctl start redis</code>命令启动Redis服务时，默认情况下会以<code>redis</code>用户的身份运行。这是通过<code>systemd</code>的单元文件来配置的，该文件定义了服务的运行方式。</p>
+<p>要查看Redis服务的用户配置，可以执行以下步骤：</p>
+<ol>
+<li>打开Redis服务的单元文件。在大多数Linux发行版上，Redis服务的单元文件位于<code>/etc/systemd/system/redis.service</code>或<code>/lib/systemd/system/redis.service</code>。</li>
+<li>使用文本编辑器打开该文件。</li>
+<li>在文件中查找<code>User</code>行。该行指定了运行Redis服务的用户。它应该类似于以下内容：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User=redis</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>如果你想更改运行Redis服务的用户，只需将<code>User</code>行中的值修改为你想要的用户名，并保存文件。</li>
+<li>重新加载<code>systemd</code>配置并重新启动Redis服务，以使更改生效。可以使用以下命令：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart redis</span><br></pre></td></tr></table></figure>
+
+<p>请注意，更改运行Redis服务的用户需要具有适当的系统权限，并且确保新的用户具有访问Redis所需的文件和目录的权限。此外，确保在更改用户配置之前备份原始的单元文件，以便在需要时可以还原。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/redis/">redis</a></div><div class="post_share"><div class="social-share" data-image="/assets/img/tx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/03/notes/SpringSecurity/SpringSecurity/" title="SpringSecurity"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SpringSecurity</div></div></a></div><div class="next-post pull-right"><a href="/2022/12/27/notes/design_pattern/design_pattern/" title="design_pattern"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">design_pattern</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Boranget</div><div class="author-info__description">整理的一些笔记和平时的一些经验</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Boranget"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">笔记分类是一些看书或者网课做的笔记，经验分类一般是平时碰到的问题或者折腾的一些小东西。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#windows%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80"><span class="toc-number">1.</span> <span class="toc-text">windows下载地址</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SDS"><span class="toc-number">2.</span> <span class="toc-text">SDS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%93%BE%E8%A1%A8"><span class="toc-number">3.</span> <span class="toc-text">链表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%97%E5%85%B8"><span class="toc-number">4.</span> <span class="toc-text">字典</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RedisTemplate"><span class="toc-number">5.</span> <span class="toc-text">RedisTemplate</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">5.1.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#redis%E8%BF%9E%E6%8E%A5"><span class="toc-number">5.1.1.</span> <span class="toc-text">redis连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#redis%E9%85%8D%E7%BD%AE"><span class="toc-number">5.1.2.</span> <span class="toc-text">redis配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8"><span class="toc-number">5.1.3.</span> <span class="toc-text">调用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EnableRedisRepositories"><span class="toc-number">6.</span> <span class="toc-text">EnableRedisRepositories</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-1"><span class="toc-number">6.1.</span> <span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E4%BD%93%E7%B1%BB%E9%85%8D%E7%BD%AE"><span class="toc-number">6.1.1.</span> <span class="toc-text">实体类配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dao%E4%B8%8EService"><span class="toc-number">6.1.2.</span> <span class="toc-text">Dao与Service</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B0%83%E7%94%A8-1"><span class="toc-number">6.1.3.</span> <span class="toc-text">调用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="toc-number">7.</span> <span class="toc-text">保护模式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A6%81%E7%94%A8%E6%88%96%E8%80%85%E9%87%8D%E5%91%BD%E5%90%8D%E5%8D%B1%E9%99%A9%E5%91%BD%E4%BB%A4"><span class="toc-number">8.</span> <span class="toc-text">禁用或者重命名危险命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5"><span class="toc-number">9.</span> <span class="toc-text">启用远程连接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%90%AF%E7%94%A8%E5%AF%86%E7%A0%81%E5%90%8E%E7%9A%84cli%E8%BF%9E%E6%8E%A5"><span class="toc-number">10.</span> <span class="toc-text">启用密码后的cli连接</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hash%E8%BF%87%E6%9C%9F"><span class="toc-number">11.</span> <span class="toc-text">Hash过期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95"><span class="toc-number">12.</span> <span class="toc-text">日志记录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#redis%E8%A2%AB%E6%94%BB%E5%87%BB%E8%AE%B0%E5%BD%95"><span class="toc-number">13.</span> <span class="toc-text">redis被攻击记录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#systemctl%E5%90%AF%E5%8A%A8redis%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="toc-number">14.</span> <span class="toc-text">systemctl启动redis的配置</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/27/experience/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/" title="windows服务部署jar">windows服务部署jar</a><time datetime="2025-02-27T08:35:19.000Z" title="更新于 2025-02-27 16:35:19">2025-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/" title="大白菜U盘">大白菜U盘</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/" title="联想B300一体机刷BIOS">联想B300一体机刷BIOS</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/notes/Elasticsearch/Elasticsearch/" title="Elasticsearch">Elasticsearch</a><time datetime="2024-12-27T07:35:19.000Z" title="更新于 2024-12-27 15:35:19">2024-12-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/experience/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/" title="浏览器的各种存储">浏览器的各种存储</a><time datetime="2024-12-17T02:35:19.000Z" title="更新于 2024-12-17 10:35:19">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Boranget</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

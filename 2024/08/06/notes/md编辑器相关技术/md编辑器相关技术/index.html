@@ -1,0 +1,224 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>md编辑器相关技术记录 | Boranget.博客</title><meta name="author" content="Boranget"><meta name="copyright" content="Boranget"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="参考资料从零开始写一个富文本编辑器（一） - 掘金 (juejin.cn) 十分钟实现自己的Typora - 掘金 (juejin.cn) Selection - Web API | MDN (mozilla.org) Vditor 实现 Markdown 所见即所得 - 链滴 (ld246.com) 关于所见即所得 Markdown 编辑器的讨论 - 链滴 (ld246.com) 剪贴板操作 C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="md编辑器相关技术记录">
+<meta property="og:url" content="https://boranget.github.io/2024/08/06/notes/md%E7%BC%96%E8%BE%91%E5%99%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/md%E7%BC%96%E8%BE%91%E5%99%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="Boranget.博客">
+<meta property="og:description" content="参考资料从零开始写一个富文本编辑器（一） - 掘金 (juejin.cn) 十分钟实现自己的Typora - 掘金 (juejin.cn) Selection - Web API | MDN (mozilla.org) Vditor 实现 Markdown 所见即所得 - 链滴 (ld246.com) 关于所见即所得 Markdown 编辑器的讨论 - 链滴 (ld246.com) 剪贴板操作 C">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boranget.github.io/assets/img/tx.png">
+<meta property="article:published_time" content="2024-08-06T09:35:19.000Z">
+<meta property="article:modified_time" content="2024-08-06T09:35:19.000Z">
+<meta property="article:author" content="Boranget">
+<meta property="article:tag" content="编辑器">
+<meta property="article:tag" content="markdown">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boranget.github.io/assets/img/tx.png"><link rel="shortcut icon" href="/assets/img/tx.png"><link rel="canonical" href="https://boranget.github.io/2024/08/06/notes/md%E7%BC%96%E8%BE%91%E5%99%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/md%E7%BC%96%E8%BE%91%E5%99%A8%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'md编辑器相关技术记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-08-06 17:35:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Boranget.博客"><img class="site-icon" src="/assets/img/tx.png"/><span class="site-name">Boranget.博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">md编辑器相关技术记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-08-06T09:35:19.000Z" title="发表于 2024-08-06 17:35:19">2024-08-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-08-06T09:35:19.000Z" title="更新于 2024-08-06 17:35:19">2024-08-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notes/">notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="md编辑器相关技术记录"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6924346082797289480">从零开始写一个富文本编辑器（一） - 掘金 (juejin.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903878224412686">十分钟实现自己的Typora - 掘金 (juejin.cn)</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Selection">Selection - Web API | MDN (mozilla.org)</a></p>
+<p><a target="_blank" rel="noopener" href="https://ld246.com/article/1577370404903">Vditor 实现 Markdown 所见即所得 - 链滴 (ld246.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://ld246.com/article/1579414663700">关于所见即所得 Markdown 编辑器的讨论 - 链滴 (ld246.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2021/01/clipboard-api.html">剪贴板操作 Clipboard API 教程 - 阮一峰的网络日志 (ruanyifeng.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://spec.commonmark.org/0.31.2">https://spec.commonmark.org/0.31.2</a></p>
+<h1 id="Selection"><a href="#Selection" class="headerlink" title="Selection"></a>Selection</h1><p>Selection中存储用户选择的文本范围或者插入符号的位置，获取方式：<code>window.getSelection()</code></p>
+<p>在不可编辑元素中，插入点位置和选区范围必须通过鼠标的点击或者拖拽产生，在可编辑元素中，插入点位置和选取范围也可以通过键盘方向键变化。</p>
+<p>可通过<code>window.getSelection().toString()</code>获取被选中的文字</p>
+<h1 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h1><p>可通过<code>selection.getRangeAt</code>获取</p>
+<ul>
+<li><code>Range.commonAncestorContainer</code>返回完整包含所选内容的最深一层的节点</li>
+</ul>
+<h1 id="designMode"><a href="#designMode" class="headerlink" title="designMode"></a>designMode</h1><p>document的designMode属性，可以将整个页面开启编辑模式，类似于给整个页面加上了<code>contentEditable=&quot;true&quot;</code>属性。</p>
+<p>设置方式如：</p>
+<p><code>document.designMode = &quot;on&quot;;</code></p>
+<p>可选值有<code>on</code>和<code>off</code></p>
+<p>设置iframe可编辑：</p>
+<p><code>iframeNode.contentDocument.designMode = &quot;on&quot;;</code></p>
+<p>可以将编辑区设为iframe</p>
+<h1 id="contentEditable"><a href="#contentEditable" class="headerlink" title="contentEditable"></a>contentEditable</h1><p>该属性用于开启某个元素的可编辑：</p>
+<ul>
+<li><code>&quot;true&quot;</code> 表明该元素可编辑。</li>
+<li><code>&quot;false&quot;</code> 表明该元素不可编辑。</li>
+<li><code>&quot;plaintext-only&quot;</code> 表明该元素可以纯文本格式编辑，富文本格式会被禁用。</li>
+<li><code>&quot;inherit&quot;</code> 表明该元素继承了其父元素的可编辑状态。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">editable = element.<span class="property">contentEditable</span></span><br><span class="line">element.<span class="property">contentEditable</span> = <span class="string">&quot;true&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="选中复制"><a href="#选中复制" class="headerlink" title="选中复制"></a>选中复制</h1><p>复制html页面时，复制到的内容为标签中间的内容，也就是innerText，也包括可编辑内容如输入框的value</p>
+<h1 id="一些事件监听器"><a href="#一些事件监听器" class="headerlink" title="一些事件监听器"></a>一些事件监听器</h1><p>同一元素同一类型的事件监听器可以注册多个</p>
+<h2 id="input"><a href="#input" class="headerlink" title="input"></a>input</h2><p>在可编辑元素或者开启了可编辑的元素上添加监听器监听input事件</p>
+<h2 id="beforeinput"><a href="#beforeinput" class="headerlink" title="beforeinput"></a>beforeinput</h2><p>会在元素编辑前触发，此时e中的target为编辑前的状态，但在该事件中无法阻止输入的执行</p>
+<h2 id="selectionchange"><a href="#selectionchange" class="headerlink" title="selectionchange"></a>selectionchange</h2><p>会在selection变化时触发，包括选区变化，点击了新的位置或者输入了新的内容</p>
+<h1 id="思路记录（旧版）"><a href="#思路记录（旧版）" class="headerlink" title="思路记录（旧版）"></a>思路记录（旧版）</h1><p>使用抽象语法树来分析整个文档，或者使用抽象语法树的时候要不要将h2与h1（等情况）的层级关系抽象到语法树中。</p>
+<p>目前看来md最合适的方式是所有的元素都在一个层级，比如标题、与标题下的正文，这些元素应该是在同一个层级就可以（抽象为一个一个块），这样在进行标题的添加与删除时，不会导致整个文档的语法树层级变化太大，而对每一块做编辑的时候，每次只需要重新渲染当前块即可，这样变化量较小</p>
+<p>每次input事件被触发时，获取当前range，获取选区内的对象内容，接着重新渲染这部分内容，渲染完成后重置光标</p>
+<p>如果是先选中一部分选区后，做删除或者替换操作，则在input之前（beforeinput事件）通过range判断选中的范围（影响的块），在input后再根据具体的操作，则获取这个选取内的所有块的文本后进行重新渲染，如果是添加也一样，此时肯定要先将选定范围内容的所有元素都删除再重新渲染</p>
+<p>关于块级上下文思路：碰到一个空行后则开启&#x2F;关闭一个上下文，在上下文中要根据当前上下文渲染样式，比如碰到代码块或者列表这种多行的块结构，特殊情况比如代码块等有标准的块上下文标识的按照具体情况考虑</p>
+<p>块内的元素，考虑在块内再加一个小一级的元素，至于块内的内容可以用一个List，List里包含这些元素，叫Token又好像不太符合，可以叫零件[Part]</p>
+<h2 id="不同元素的块划分"><a href="#不同元素的块划分" class="headerlink" title="不同元素的块划分"></a>不同元素的块划分</h2><h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><p>标题是比较简单的，碰到<code>#</code>后，往后继续看，如果还是#，就放到缓冲区，继续向后看，如果在此时看到了空格，则当前行为标题，如果遇到既不是<code>#</code>也不是空格的情况，则当正文处理，标题前后无需空行，且标题可空，标题可切断段落</p>
+<h3 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h3><p>碰到空行后，上方与下方都单独形成一个块，前提是当前上下文环境非围栏代码块，且当前空行也可作为一个块</p>
+<h3 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h3><p>碰到两个空格+一个回车符号的时候，生成一个&lt;br&#x2F;&gt;标签，渲染时直接将br标签加到上一个块的末尾。在生成块元素时，可以作为行内零件放在最后。</p>
+<h3 id="强调语法"><a href="#强调语法" class="headerlink" title="强调语法"></a>强调语法</h3><p>强调语法同样是行内零件：</p>
+<p>这里可以使用栈，构造一个强调语法栈，</p>
+<p>碰到星号&#x2F;下划线后，提前预读下一个字符，下一个字符如果还是星号，形成粗体标识，否则形成斜体标识，此时判断栈顶元素？不太合理，比如<code>**123*</code>的情况，应该渲染<code>*123</code>为斜体，但如果提前确认前面的为粗体标识就误判了，至于<strong>123*123</strong>，则应该将中间的部分<code>123*123</code>都加粗。</p>
+<p>应该这样：碰到一个星号的时候，开启一个斜体上下文，同时保持记录正文，如果下一个字符是星号，就继续开启一个粗体上下文，但不关闭斜体上下文，接着在当前块往下读，当读到一个星号时，则继续向下预读一个字符，如果是星号，则形成粗体零件，如果下一个字符不是星号，则形成斜体零件。</p>
+<p>对比Typora，似乎粗体上下文比斜体有着更高的优先级，匹配成功斜体零件后，粗体并不会立即关闭，直到碰到下一个粗体标识或者当前块结束。甚至在粗体上下文存在时，如果匹配到斜体的星号，还会再开启一个斜体上下文。</p>
+<p>。。。。。。。太复杂了</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>某行开头若碰到<code>&gt;</code>符号，则当前行为引用格式，</p>
+<p>引用为多行一块的形式：多行如果都为引用开头，则这些行都在同一个引用块中，所以当碰到<code>&gt;</code>开头的行时，应该开启一个引用上下文，直到下一行不是<code>&gt;</code>开头。</p>
+<p>引用块中的内容可以继续渲染md：将去掉行开始字符的内容作为正文，那就说明，引用块不会影响其他块比如标题（需要#开头），但引用块中的标题不会体现在导航栏。 </p>
+<h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><p>数字加一个点再加一个空格开头的行作为有序列表，同样的应该开启一个有序列表的上下文，这里要注意有序列表存在嵌套的情况，所以如果某一行开头是空格，接着出现有序列表标识，则需要记录当前有序列表开头的空格数，作为当前有序列表的层级标识。如果碰到当前层级比上一行的有序列表层级低，则新开一个上下文，直到碰到高于当前层级的有序列表才关闭。</p>
+<h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><p>类似有序列表，不过开头非数字而是如下字符:<code>-</code>, <code>*</code>, <code>+</code></p>
+<h3 id="列表中包含其他元素"><a href="#列表中包含其他元素" class="headerlink" title="列表中包含其他元素"></a>列表中包含其他元素</h3><p>类似于引用块的封装</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>代码为行内零件，可以采取就近原则，发现一个&#96;符号后则开启代码上下文，同时保持记录正文，直到发现下一个代码符号或者当前行结束。</p>
+<h3 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h3><p>将代码的每一行开头都使用四个空格或者一个制表符缩进，类似于引用的处理。</p>
+<h3 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h3><p>在单独的一个块中使用三个以上的如下符号可创建一条分割线：<code>*</code>,<code>-</code>,<code>_</code>，不包含其他内容（空格及制表符除外）</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BC%96%E8%BE%91%E5%99%A8/">编辑器</a><a class="post-meta__tags" href="/tags/markdown/">markdown</a></div><div class="post_share"><div class="social-share" data-image="/assets/img/tx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/08/06/notes/markdown%E8%A7%84%E8%8C%83%E6%95%99%E7%A8%8B/markdown%E8%A7%84%E8%8C%83%E6%95%99%E7%A8%8B/" title="markdown规范教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">markdown规范教程</div></div></a></div><div class="next-post pull-right"><a href="/2024/08/05/notes/%E6%89%AB%E6%8F%8F%E6%9E%AA%E6%8E%A5%E5%85%A5%E5%89%8D%E7%AB%AF/%E6%89%AB%E6%8F%8F%E6%9E%AA%E6%8E%A5%E5%85%A5%E5%89%8D%E7%AB%AF/" title="扫描枪接入前端"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">扫描枪接入前端</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/11/17/notes/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/Alhagi%E5%AE%9E%E7%8E%B0%E8%AE%B0%E5%BD%95/" title="Alhagi实现记录"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-17</div><div class="title">Alhagi实现记录</div></div></a></div><div><a href="/2024/05/08/notes/%E7%BC%96%E8%BE%91%E5%99%A8LSP%E6%9C%8D%E5%8A%A1/%E7%BC%96%E8%BE%91%E5%99%A8LSP%E6%9C%8D%E5%8A%A1/" title="编辑器LSP服务"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-08</div><div class="title">编辑器LSP服务</div></div></a></div><div><a href="/2024/11/17/notes/CommonMarkdown/CommonMarkdown/" title="CommonMarkdown"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-11-17</div><div class="title">CommonMarkdown</div></div></a></div><div><a href="/2024/08/06/notes/markdown%E8%A7%84%E8%8C%83%E6%95%99%E7%A8%8B/markdown%E8%A7%84%E8%8C%83%E6%95%99%E7%A8%8B/" title="markdown规范教程"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-06</div><div class="title">markdown规范教程</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Boranget</div><div class="author-info__description">整理的一些笔记和平时的一些经验</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Boranget"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">笔记分类是一些看书或者网课做的笔记，经验分类一般是平时碰到的问题或者折腾的一些小东西。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Selection"><span class="toc-number">2.</span> <span class="toc-text">Selection</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Range"><span class="toc-number">3.</span> <span class="toc-text">Range</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#designMode"><span class="toc-number">4.</span> <span class="toc-text">designMode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#contentEditable"><span class="toc-number">5.</span> <span class="toc-text">contentEditable</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%89%E4%B8%AD%E5%A4%8D%E5%88%B6"><span class="toc-number">6.</span> <span class="toc-text">选中复制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E5%99%A8"><span class="toc-number">7.</span> <span class="toc-text">一些事件监听器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#input"><span class="toc-number">7.1.</span> <span class="toc-text">input</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#beforeinput"><span class="toc-number">7.2.</span> <span class="toc-text">beforeinput</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#selectionchange"><span class="toc-number">7.3.</span> <span class="toc-text">selectionchange</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF%E8%AE%B0%E5%BD%95%EF%BC%88%E6%97%A7%E7%89%88%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">思路记录（旧版）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E5%85%83%E7%B4%A0%E7%9A%84%E5%9D%97%E5%88%92%E5%88%86"><span class="toc-number">8.1.</span> <span class="toc-text">不同元素的块划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E9%A2%98"><span class="toc-number">8.1.1.</span> <span class="toc-text">标题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AE%B5%E8%90%BD"><span class="toc-number">8.1.2.</span> <span class="toc-text">段落</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%A2%E8%A1%8C"><span class="toc-number">8.1.3.</span> <span class="toc-text">换行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E8%B0%83%E8%AF%AD%E6%B3%95"><span class="toc-number">8.1.4.</span> <span class="toc-text">强调语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">8.1.5.</span> <span class="toc-text">引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">8.1.6.</span> <span class="toc-text">有序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">8.1.7.</span> <span class="toc-text">无序列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E4%B8%AD%E5%8C%85%E5%90%AB%E5%85%B6%E4%BB%96%E5%85%83%E7%B4%A0"><span class="toc-number">8.1.8.</span> <span class="toc-text">列表中包含其他元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">8.1.9.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="toc-number">8.1.10.</span> <span class="toc-text">代码块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%89%B2%E7%BA%BF"><span class="toc-number">8.1.11.</span> <span class="toc-text">分割线</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/27/experience/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/" title="windows服务部署jar">windows服务部署jar</a><time datetime="2025-02-27T08:35:19.000Z" title="更新于 2025-02-27 16:35:19">2025-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/" title="大白菜U盘">大白菜U盘</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/" title="联想B300一体机刷BIOS">联想B300一体机刷BIOS</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/notes/Elasticsearch/Elasticsearch/" title="Elasticsearch">Elasticsearch</a><time datetime="2024-12-27T07:35:19.000Z" title="更新于 2024-12-27 15:35:19">2024-12-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/experience/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/" title="浏览器的各种存储">浏览器的各种存储</a><time datetime="2024-12-17T02:35:19.000Z" title="更新于 2024-12-17 10:35:19">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Boranget</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

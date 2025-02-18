@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>OrangeFrame | Boranget.博客</title><meta name="author" content="Boranget"><meta name="copyright" content="Boranget"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="系统结构parent依赖版本管理 auth进行认证  用户名密码匹配 账户失效判断 将用户角色存入redis  common 公用工具类 共用实体类  除此之外还有自动配置等 gateway网关，进行鉴权 rbac进行rbac信息的增删改查 数据结构设计RBACuser 数据库中字段 id username password enabled account_non_expired account_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OrangeFrame">
+<meta property="og:url" content="https://boranget.github.io/2023/02/01/notes/OrangeFrame/OrangeFrame/index.html">
+<meta property="og:site_name" content="Boranget.博客">
+<meta property="og:description" content="系统结构parent依赖版本管理 auth进行认证  用户名密码匹配 账户失效判断 将用户角色存入redis  common 公用工具类 共用实体类  除此之外还有自动配置等 gateway网关，进行鉴权 rbac进行rbac信息的增删改查 数据结构设计RBACuser 数据库中字段 id username password enabled account_non_expired account_">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boranget.github.io/assets/img/tx.png">
+<meta property="article:published_time" content="2023-02-01T08:50:30.000Z">
+<meta property="article:modified_time" content="2023-05-31T08:40:19.000Z">
+<meta property="article:author" content="Boranget">
+<meta property="article:tag" content="java frame">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boranget.github.io/assets/img/tx.png"><link rel="shortcut icon" href="/assets/img/tx.png"><link rel="canonical" href="https://boranget.github.io/2023/02/01/notes/OrangeFrame/OrangeFrame/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'OrangeFrame',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-05-31 16:40:19'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Boranget.博客"><img class="site-icon" src="/assets/img/tx.png"/><span class="site-name">Boranget.博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">OrangeFrame</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-01T08:50:30.000Z" title="发表于 2023-02-01 16:50:30">2023-02-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-05-31T08:40:19.000Z" title="更新于 2023-05-31 16:40:19">2023-05-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/notes/">notes</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="OrangeFrame"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="系统结构"><a href="#系统结构" class="headerlink" title="系统结构"></a>系统结构</h1><h2 id="parent"><a href="#parent" class="headerlink" title="parent"></a>parent</h2><p>依赖版本管理</p>
+<h2 id="auth"><a href="#auth" class="headerlink" title="auth"></a>auth</h2><p>进行认证</p>
+<ul>
+<li>用户名密码匹配</li>
+<li>账户失效判断</li>
+<li>将用户角色存入redis</li>
+</ul>
+<h2 id="common"><a href="#common" class="headerlink" title="common"></a>common</h2><ul>
+<li>公用工具类</li>
+<li>共用实体类</li>
+</ul>
+<p>除此之外还有自动配置等</p>
+<h2 id="gateway"><a href="#gateway" class="headerlink" title="gateway"></a>gateway</h2><p>网关，进行鉴权</p>
+<h2 id="rbac"><a href="#rbac" class="headerlink" title="rbac"></a>rbac</h2><p>进行rbac信息的增删改查</p>
+<h1 id="数据结构设计"><a href="#数据结构设计" class="headerlink" title="数据结构设计"></a>数据结构设计</h1><h2 id="RBAC"><a href="#RBAC" class="headerlink" title="RBAC"></a>RBAC</h2><h3 id="user"><a href="#user" class="headerlink" title="user"></a>user</h3><ul>
+<li>数据库中字段<ul>
+<li>id</li>
+<li>username</li>
+<li>password</li>
+<li>enabled</li>
+<li>account_non_expired</li>
+<li>account_non_locked</li>
+<li>credentials_non_expired</li>
+</ul>
+</li>
+<li>实体类中字段<ul>
+<li>roleList 角色列表</li>
+</ul>
+</li>
+</ul>
+<h3 id="role"><a href="#role" class="headerlink" title="role"></a>role</h3><p>&#x2F;&#x2F; 从redis中查看当前角色中有无当前api,若无,则查看有无parent,递归查找,都没有则返回false</p>
+<p><strong>关于角色递归</strong></p>
+<p>使用递归形式的角色保存可以减少后期查询次数，但如果派生角色和基础角色都为递归形式，则会出现无限递归的情况。</p>
+<p>例如，b为a的派生角色，则a的派生列表中是有b的，但b的基础角色中又会存在a，如此便会形成递归,造成溢出. 故这两个列表中只能有一个是递归的形式。</p>
+<p>经过考虑，将基础角色做递归处理，派生角色不做，因为基础角色也属于是当前角色的一个身份，是比较重要的，而派生角色的行为对当前角色并无影响，所以派生角色不做递归处理。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span> ?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">mapper</span></span></span><br><span class="line"><span class="meta">        <span class="keyword">PUBLIC</span> <span class="string">&quot;-//mybais.org//DTD Mapper 3.0//EN&quot;</span></span></span><br><span class="line"><span class="meta">        <span class="string">&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.orange.mapper.OrangeRoleMapper&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">&quot;RoleResultMap&quot;</span> <span class="attr">type</span>=<span class="string">&quot;com.orange.eneity.OrangeRole&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">id</span> <span class="attr">column</span>=<span class="string">&quot;id&quot;</span> <span class="attr">property</span>=<span class="string">&quot;id&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;name&quot;</span> <span class="attr">property</span>=<span class="string">&quot;name&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">&quot;desc&quot;</span> <span class="attr">property</span>=<span class="string">&quot;desc&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;derivedRoleList&quot;</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">ofType</span>=<span class="string">&quot;com.orange.eneity.OrangeRole&quot;</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">select</span>=<span class="string">&quot;selectDerivedRoleList&quot;</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">column</span>=<span class="string">&quot;id&quot;</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">collection</span> <span class="attr">property</span>=<span class="string">&quot;baseRoleList&quot;</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">ofType</span>=<span class="string">&quot;com.orange.eneity.OrangeRole&quot;</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">select</span>=<span class="string">&quot;selectBaseRoleList&quot;</span></span></span><br><span class="line"><span class="tag">                    <span class="attr">column</span>=<span class="string">&quot;id&quot;</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectRoleByRoleName&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;RoleResultMap&quot;</span>&gt;</span></span><br><span class="line">        select `id`, `name`, `desc`</span><br><span class="line">        from role</span><br><span class="line">        where name = #&#123;roleName&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--这里使用type而不使用type是为了防止递归--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectDerivedRoleList&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.orange.eneity.OrangeRole&quot;</span>&gt;</span></span><br><span class="line">        select r2.*</span><br><span class="line">        from role r1</span><br><span class="line">                 LEFT JOIN role_role rr on r1.id = rr.base_role_id</span><br><span class="line">                 LEFT JOIN role r2 on rr.derived_role_id = r2.id</span><br><span class="line">        WHERE r1.id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--这里使用map进行递归处理--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectBaseRoleList&quot;</span> <span class="attr">resultMap</span>=<span class="string">&quot;RoleResultMap&quot;</span>&gt;</span></span><br><span class="line">        select r1.*</span><br><span class="line">        from role r1</span><br><span class="line">                 LEFT JOIN role_role rr on r1.id = rr.base_role_id</span><br><span class="line">                 LEFT JOIN role r2 on rr.derived_role_id = r2.id</span><br><span class="line">        WHERE r2.id = #&#123;id&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>数据库中字段<ul>
+<li>id</li>
+<li>name</li>
+<li>desc</li>
+</ul>
+</li>
+<li>实体类中字段<ul>
+<li>derivedRoleList 派生角色列表</li>
+<li>BaseRoleList 基础角色列表</li>
+<li>menuList 菜单列表,对多,表示当前角色可访问的menu</li>
+<li>apiList 接口列表,对多,表示当前角色可访问的api</li>
+</ul>
+</li>
+</ul>
+<h3 id="menu"><a href="#menu" class="headerlink" title="menu"></a>menu</h3><ul>
+<li>数据库字段<ul>
+<li>id</li>
+<li>name</li>
+<li>permission 权限标识</li>
+<li>pattern 绑定的地址</li>
+<li>parent 父级菜单</li>
+<li>sort 排序字段</li>
+<li>desc 描述</li>
+</ul>
+</li>
+<li>实体类字段<ul>
+<li>subMenuList 子菜单</li>
+</ul>
+</li>
+</ul>
+<h3 id="api"><a href="#api" class="headerlink" title="api"></a>api</h3><ul>
+<li>数据库字段<ul>
+<li>id</li>
+<li>name</li>
+<li>permission 权限标识</li>
+<li>pattern 绑定的地址</li>
+<li>desc 描述</li>
+</ul>
+</li>
+</ul>
+<h3 id="一些关联表"><a href="#一些关联表" class="headerlink" title="一些关联表"></a>一些关联表</h3><p>user-role， role-role， role-menu， role-api</p>
+<h1 id="一些逻辑设计"><a href="#一些逻辑设计" class="headerlink" title="一些逻辑设计"></a>一些逻辑设计</h1><h2 id="用户登录"><a href="#用户登录" class="headerlink" title="用户登录"></a>用户登录</h2><p>用户登录时，将用户信息存入redis，这里主要需要将role给封装进user中，包括role的基角色和派生角色</p>
+<p>这里的基角色是递归的，便于查询其所有权限</p>
+<p>将 api-role 对应关系存入redis，便于鉴权: {</p>
+<p>​	当请求走到网关时, 根据请求所带的token查找该token所拥有的角色,</p>
+<p>​	根据api-role对应关系列出访问该api所需的role</p>
+<p>​	判断该用户有无所需role,若有则放行.</p>
+<p>​	判断是深入判断其基角色</p>
+<p>}</p>
+<h2 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h2><p><strong>判断token是否合法</strong></p>
+<ul>
+<li>存在</li>
+<li>未过期</li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java-frame/">java frame</a></div><div class="post_share"><div class="social-share" data-image="/assets/img/tx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/23/notes/java/java/" title="java"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">java</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/01/notes/gateway/gateway/" title="gateway"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">gateway</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Boranget</div><div class="author-info__description">整理的一些笔记和平时的一些经验</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Boranget"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">笔记分类是一些看书或者网课做的笔记，经验分类一般是平时碰到的问题或者折腾的一些小东西。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">系统结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#parent"><span class="toc-number">1.1.</span> <span class="toc-text">parent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#auth"><span class="toc-number">1.2.</span> <span class="toc-text">auth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#common"><span class="toc-number">1.3.</span> <span class="toc-text">common</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gateway"><span class="toc-number">1.4.</span> <span class="toc-text">gateway</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rbac"><span class="toc-number">1.5.</span> <span class="toc-text">rbac</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">2.</span> <span class="toc-text">数据结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RBAC"><span class="toc-number">2.1.</span> <span class="toc-text">RBAC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#user"><span class="toc-number">2.1.1.</span> <span class="toc-text">user</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#role"><span class="toc-number">2.1.2.</span> <span class="toc-text">role</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#menu"><span class="toc-number">2.1.3.</span> <span class="toc-text">menu</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#api"><span class="toc-number">2.1.4.</span> <span class="toc-text">api</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B3%E8%81%94%E8%A1%A8"><span class="toc-number">2.1.5.</span> <span class="toc-text">一些关联表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%80%BB%E8%BE%91%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.</span> <span class="toc-text">一些逻辑设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95"><span class="toc-number">3.1.</span> <span class="toc-text">用户登录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E5%85%B3"><span class="toc-number">3.2.</span> <span class="toc-text">网关</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/27/experience/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/" title="windows服务部署jar">windows服务部署jar</a><time datetime="2025-02-27T08:35:19.000Z" title="更新于 2025-02-27 16:35:19">2025-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/" title="大白菜U盘">大白菜U盘</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/" title="联想B300一体机刷BIOS">联想B300一体机刷BIOS</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/notes/Elasticsearch/Elasticsearch/" title="Elasticsearch">Elasticsearch</a><time datetime="2024-12-27T07:35:19.000Z" title="更新于 2024-12-27 15:35:19">2024-12-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/experience/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/" title="浏览器的各种存储">浏览器的各种存储</a><time datetime="2024-12-17T02:35:19.000Z" title="更新于 2024-12-17 10:35:19">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Boranget</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>

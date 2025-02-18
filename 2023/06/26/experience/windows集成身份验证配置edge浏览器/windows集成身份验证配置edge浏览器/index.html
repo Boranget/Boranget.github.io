@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>windows集成身份验证配置edge浏览器 | Boranget.博客</title><meta name="author" content="Boranget"><meta name="copyright" content="Boranget"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="某系统与windows域控配置了sso，故可以使用计算机用户账号登录该系统。当前已可以使用计算机用户账号登录该系统，期望效果为打开系统登陆页面自动登录而无需手动输入用户名和密码。 参考资料配置浏览器以将 Windows 集成身份验证 (WIA) 与 AD FS 配合使用 | Microsoft Learn IE浏览器配置自动登录打开IE设置菜单中的Internet选项，安全：自定义级别，滑倒最下面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows集成身份验证配置edge浏览器">
+<meta property="og:url" content="https://boranget.github.io/2023/06/26/experience/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AEedge%E6%B5%8F%E8%A7%88%E5%99%A8/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AEedge%E6%B5%8F%E8%A7%88%E5%99%A8/index.html">
+<meta property="og:site_name" content="Boranget.博客">
+<meta property="og:description" content="某系统与windows域控配置了sso，故可以使用计算机用户账号登录该系统。当前已可以使用计算机用户账号登录该系统，期望效果为打开系统登陆页面自动登录而无需手动输入用户名和密码。 参考资料配置浏览器以将 Windows 集成身份验证 (WIA) 与 AD FS 配合使用 | Microsoft Learn IE浏览器配置自动登录打开IE设置菜单中的Internet选项，安全：自定义级别，滑倒最下面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://boranget.github.io/assets/img/tx.png">
+<meta property="article:published_time" content="2023-06-26T08:50:30.000Z">
+<meta property="article:modified_time" content="2023-06-26T08:50:30.000Z">
+<meta property="article:author" content="Boranget">
+<meta property="article:tag" content="windows集成身份验证">
+<meta property="article:tag" content="wia">
+<meta property="article:tag" content="AD FS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://boranget.github.io/assets/img/tx.png"><link rel="shortcut icon" href="/assets/img/tx.png"><link rel="canonical" href="https://boranget.github.io/2023/06/26/experience/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AEedge%E6%B5%8F%E8%A7%88%E5%99%A8/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AEedge%E6%B5%8F%E8%A7%88%E5%99%A8/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":true,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'windows集成身份验证配置edge浏览器',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-26 16:50:30'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 5.4.2"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/assets/img/tx.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Boranget.博客"><img class="site-icon" src="/assets/img/tx.png"/><span class="site-name">Boranget.博客</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">windows集成身份验证配置edge浏览器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-26T08:50:30.000Z" title="发表于 2023-06-26 16:50:30">2023-06-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-26T08:50:30.000Z" title="更新于 2023-06-26 16:50:30">2023-06-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/experience/">experience</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="windows集成身份验证配置edge浏览器"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>某系统与windows域控配置了sso，故可以使用计算机用户账号登录该系统。当前已可以使用计算机用户账号登录该系统，期望效果为打开系统登陆页面自动登录而无需手动输入用户名和密码。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-server/identity/ad-fs/operations/configure-ad-fs-browser-wia">配置浏览器以将 Windows 集成身份验证 (WIA) 与 AD FS 配合使用 | Microsoft Learn</a></p>
+<h1 id="IE浏览器配置自动登录"><a href="#IE浏览器配置自动登录" class="headerlink" title="IE浏览器配置自动登录"></a>IE浏览器配置自动登录</h1><p>打开IE设置菜单中的Internet选项，安全：自定义级别，滑倒最下面，在用户身份验证-登录中旋转自动使用当前用户名和密码登录。</p>
+<h1 id="edge浏览器配置"><a href="#edge浏览器配置" class="headerlink" title="edge浏览器配置"></a>edge浏览器配置</h1><p>系统设置Internet属性</p>
+<p>开始菜单搜索 ”inetcpl.cpl“，打开internet属性，设置方式同IE</p>
+<p>windows server 默认是允许IE发起自动登录请求的，edge需要在域服务器上设置下（也有可能是新版的edge需要设置）</p>
+<ol>
+<li><p>查看</p>
+<p>域管理员权限打开powershell，执行</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Get-AdfsProperties</span> | <span class="built_in">select</span> <span class="literal">-ExpandProperty</span> WiaSupportedUserAgents</span><br></pre></td></tr></table></figure>
+
+<p>可以查看当前支持的浏览器</p>
+<p><img src="/2023/06/26/experience/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AEedge%E6%B5%8F%E8%A7%88%E5%99%A8/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AEedge%E6%B5%8F%E8%A7%88%E5%99%A8/wiasupport.png" alt="WIA 支持"></p>
+<p>虽然结尾是.*Edge，但新版的Edge并不支持，故我猜想或许旧版的Edge浏览器是支持的</p>
+</li>
+<li><p>添加配置</p>
+<ul>
+<li>Windows Server 2012 R2 或更低版本</li>
+</ul>
+  <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-AdfsProperties</span> <span class="literal">-WIASupportedUserAgents</span> <span class="selector-tag">@</span>(<span class="string">&quot;MSIE 6.0&quot;</span>, <span class="string">&quot;MSIE 7.0; Windows NT&quot;</span>, <span class="string">&quot;MSIE 8.0&quot;</span>, <span class="string">&quot;MSIE 9.0&quot;</span>, <span class="string">&quot;MSIE 10.0; Windows NT 6&quot;</span>, <span class="string">&quot;Windows NT 6.3; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.3; Win64; x64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.3; WOW64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.2; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.2; Win64; x64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.2; WOW64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.1; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.1; Win64; x64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.1; WOW64; Trident/7.0&quot;</span>,<span class="string">&quot;Windows NT 10.0; WOW64; Trident/7.0&quot;</span>,<span class="string">&quot;MSIPC&quot;</span>, <span class="string">&quot;Windows Rights Management Client&quot;</span>, <span class="string">&quot;Edg/&quot;</span>,<span class="string">&quot;Edge/&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>Windows Server 2016 或更高版本</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Set-AdfsProperties</span> <span class="literal">-WIASupportedUserAgents</span> <span class="selector-tag">@</span>(<span class="string">&quot;MSIE 6.0&quot;</span>, <span class="string">&quot;MSIE 7.0; Windows NT&quot;</span>, <span class="string">&quot;MSIE 8.0&quot;</span>, <span class="string">&quot;MSIE 9.0&quot;</span>, <span class="string">&quot;MSIE 10.0; Windows NT 6&quot;</span>, <span class="string">&quot;Windows NT 6.3; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.3; Win64; x64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.3; WOW64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.2; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.2; Win64; x64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.2; WOW64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.1; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.1; Win64; x64; Trident/7.0&quot;</span>, <span class="string">&quot;Windows NT 6.1; WOW64; Trident/7.0&quot;</span>,<span class="string">&quot;Windows NT 10.0; WOW64; Trident/7.0&quot;</span>, <span class="string">&quot;MSIPC&quot;</span>, <span class="string">&quot;Windows Rights Management Client&quot;</span>, <span class="string">&quot;=~Windows\s*NT.*Edg.*&quot;</span>)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>该操作将会添加如下配置</p>
+<table>
+<thead>
+<tr>
+<th align="left">用户代理</th>
+<th align="left">用例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">MSIE 6.0</td>
+<td align="left">IE 6.0</td>
+</tr>
+<tr>
+<td align="left">MSIE 7.0；Windows NT</td>
+<td align="left">IE 7、Intranet 区域中的 IE。 “Windows NT”片段由桌面操作系统发送。</td>
+</tr>
+<tr>
+<td align="left">MSIE 8.0</td>
+<td align="left">IE 8.0（没有设备发送此内容，因此需要更具体的说明）</td>
+</tr>
+<tr>
+<td align="left">MSIE 9.0</td>
+<td align="left">IE 9.0（没有设备发送此内容，因此不需要更具体的说明）</td>
+</tr>
+<tr>
+<td align="left">MSIE 10.0；Windows NT 6</td>
+<td align="left">适用于 Windows XP 和更高版本的桌面操作系统的 IE 10.0  已排除 Windows Phone 8.0 设备（首选项设置为“移动”），因为它们会发送  用户代理：Mozilla&#x2F;5.0（兼容；MSIE 10.0；Windows Phone 8.0；Trident&#x2F;6.0；IEMobile&#x2F;10.0；ARM；Touch；NOKIA；Lumia 920）</td>
+</tr>
+<tr>
+<td align="left">Windows NT 6.3；Trident&#x2F;7.0  Windows NT 6.3；Win64；x64；Trident&#x2F;7.0  Windows NT 6.3；WOW64；Trident&#x2F;7.0</td>
+<td align="left">Windows 8.1 桌面操作系统，不同平台</td>
+</tr>
+<tr>
+<td align="left">Windows NT 6.2；Trident&#x2F;7.0  Windows NT 6.2；Win64；x64；Trident&#x2F;7.0  Windows NT 6.2；WOW64；Trident&#x2F;7.0</td>
+<td align="left">Windows 8 桌面操作系统，不同平台</td>
+</tr>
+<tr>
+<td align="left">Windows NT 6.1；Trident&#x2F;7.0  Windows NT 6.1；Win64；x64；Trident&#x2F;7.0  Windows NT 6.1；WOW64；Trident&#x2F;7.0</td>
+<td align="left">Windows 7 桌面操作系统，不同平台</td>
+</tr>
+<tr>
+<td align="left">Edg&#x2F; 和 Edge&#x2F;</td>
+<td align="left">适用于 Windows Server 2012 R2 或更低版本的 Microsoft Edge (Chromium)</td>
+</tr>
+<tr>
+<td align="left">&#x3D;~Windows\s*NT.<em>Edg.</em></td>
+<td align="left">适用于 Windows Server 2016 或更高版本的 Microsoft Edge (Chromium)</td>
+</tr>
+<tr>
+<td align="left">“MSIPC”</td>
+<td align="left">Microsoft 信息保护和控制客户端</td>
+</tr>
+<tr>
+<td align="left">Windows Rights Management 客户端</td>
+<td align="left">Windows Rights Management 客户端</td>
+</tr>
+</tbody></table>
+</li>
+</ol>
+<h1 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h1><h2 id="AD"><a href="#AD" class="headerlink" title="AD"></a>AD</h2><p>Active Directory，活动目录，是一种由微软开发的目录服务，用于在网络中存储和管理计算机、用户和其他资源的信息。管理员可以用AD创建用户并授权用户访问Windows中断、服务器和应用等。或用于控制系统组、强制执行安全设置和软件更新。</p>
+<h2 id="ADFS"><a href="#ADFS" class="headerlink" title="ADFS"></a>ADFS</h2><p>Windows Server的扩展功能，允许企业拓展用户的单点登录。</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/windows%E9%9B%86%E6%88%90%E8%BA%AB%E4%BB%BD%E9%AA%8C%E8%AF%81/">windows集成身份验证</a><a class="post-meta__tags" href="/tags/wia/">wia</a><a class="post-meta__tags" href="/tags/AD-FS/">AD FS</a></div><div class="post_share"><div class="social-share" data-image="/assets/img/tx.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/06/27/experience/java%E5%8F%8D%E7%BC%96%E8%AF%91%E7%9B%B8%E5%85%B3/java%E5%8F%8D%E7%BC%96%E8%AF%91%E7%9B%B8%E5%85%B3/" title="java反编译相关"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">java反编译相关</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/15/notes/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" title="深入理解计算机系统"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深入理解计算机系统</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/assets/img/tx.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Boranget</div><div class="author-info__description">整理的一些笔记和平时的一些经验</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">173</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">176</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Boranget"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">笔记分类是一些看书或者网课做的笔记，经验分类一般是平时碰到的问题或者折腾的一些小东西。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">1.</span> <span class="toc-text">参考资料</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#IE%E6%B5%8F%E8%A7%88%E5%99%A8%E9%85%8D%E7%BD%AE%E8%87%AA%E5%8A%A8%E7%99%BB%E5%BD%95"><span class="toc-number">2.</span> <span class="toc-text">IE浏览器配置自动登录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#edge%E6%B5%8F%E8%A7%88%E5%99%A8%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">edge浏览器配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8B%93%E5%B1%95"><span class="toc-number">4.</span> <span class="toc-text">拓展</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#AD"><span class="toc-number">4.1.</span> <span class="toc-text">AD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ADFS"><span class="toc-number">4.2.</span> <span class="toc-text">ADFS</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/02/27/experience/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/windows%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2jar/" title="windows服务部署jar">windows服务部署jar</a><time datetime="2025-02-27T08:35:19.000Z" title="更新于 2025-02-27 16:35:19">2025-02-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/%E5%A4%A7%E7%99%BD%E8%8F%9CU%E7%9B%98/" title="大白菜U盘">大白菜U盘</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/01/23/experience/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/%E8%81%94%E6%83%B3B300%E4%B8%80%E4%BD%93%E6%9C%BA%E5%88%B7BIOS/" title="联想B300一体机刷BIOS">联想B300一体机刷BIOS</a><time datetime="2025-01-23T02:35:19.000Z" title="更新于 2025-01-23 10:35:19">2025-01-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/05/notes/Elasticsearch/Elasticsearch/" title="Elasticsearch">Elasticsearch</a><time datetime="2024-12-27T07:35:19.000Z" title="更新于 2024-12-27 15:35:19">2024-12-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/12/17/experience/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%90%84%E7%A7%8D%E5%AD%98%E5%82%A8/" title="浏览器的各种存储">浏览器的各种存储</a><time datetime="2024-12-17T02:35:19.000Z" title="更新于 2024-12-17 10:35:19">2024-12-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Boranget</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
